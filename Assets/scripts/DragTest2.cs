@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class DragTest1 : MonoBehaviour
+public class DragTest2 : MonoBehaviour
 {
     [SerializeField] private Camera _camera;
     private Vector2 _startTouchPosition;
@@ -42,12 +42,12 @@ public class DragTest1 : MonoBehaviour
 
     public void OnTouchStart(InputAction.CallbackContext context)
     {
-        Debug.Log("Is OnTouchStart");
+            // Debug.Log("Is OnTouchStart");
             _draggedObject = null;
             Vector2 touch = TouchPerformedAction.ReadValue<Vector2>();
             RaycastHit2D rayHit = Physics2D.GetRayIntersection(Camera.main.ScreenPointToRay(touch));
 
-            if (rayHit.collider != null)
+            if (rayHit.collider != null && rayHit.collider.CompareTag("Draggable"))
             {
                 Debug.Log("Is OnTouchStart rayhit ");
                 _draggedObject = rayHit.collider.gameObject; // วัตถุที่จะถูกลาก
