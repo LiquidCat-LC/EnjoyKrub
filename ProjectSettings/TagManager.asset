@@ -8,6 +8,7 @@ TagManager:
   - Cooking
   - Food
   - changepage
+  - panel
   layers:
   - Default
   - TransparentFX
