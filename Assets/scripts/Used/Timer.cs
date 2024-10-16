@@ -12,6 +12,8 @@ public class Timer : MonoBehaviour
     [SerializeField] Image Fill;
     [SerializeField] float Max;
     [SerializeField] GameObject obj;
+
+    Food food;
     
     
     void Start()
@@ -29,7 +31,7 @@ public class Timer : MonoBehaviour
         {
             time = 10;
             gameObject.SetActive(false);
-            Food.isCooked = true;
+            food.isCooked = true;
             obj.GetComponent<SpriteRenderer>().color = Color.white;
         }
     }
