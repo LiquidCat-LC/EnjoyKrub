@@ -9,6 +9,11 @@ public class Shaker : MonoBehaviour
     private float fillAmount = 0f;
     private bool isShaking = false;
 
+    void Start()
+    {
+fillAmount = 0f;
+    }
+
     void Update()
     {
         // ตรวจสอบการเขย่า
