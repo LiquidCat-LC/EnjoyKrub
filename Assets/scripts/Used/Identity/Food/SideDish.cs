@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class SideDish : Food
 {
+    
     private void Start()
     {
-        objectType = "Food";
-        foodCategory = "Side Dish";
+        _objectType = objectType.Food;
+        _foodCategory = foodCategory.SideDish;
         isCooked = false; 
-        this.GetComponent<SpriteRenderer>().color = Color.red;
+        GetComponent<SpriteRenderer>().color = Color.red;
     }
 
 

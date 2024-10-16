@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6866572244151389596}
   - component: {fileID: 8696537057608878908}
   - component: {fileID: 2789632085147399550}
-  - component: {fileID: 794786892630366592}
+  - component: {fileID: -6081742037132460182}
   m_Layer: 0
   m_Name: Egg
   m_TagString: Food
@@ -159,7 +159,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 3
---- !u!114 &794786892630366592
+--- !u!114 &-6081742037132460182
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -168,6 +168,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2148069469790546476}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95ab7504874c2ac479b1902203522ba9, type: 3}
+  m_Script: {fileID: 11500000, guid: 325f364c4e86dad4caa1e70b9adf35c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectName: Egg
+  _objectType: 1
+  isCooked: 0
+  _foodCategory: 1

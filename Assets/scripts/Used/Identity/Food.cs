@@ -10,15 +10,13 @@ public enum foodCategory
 }
 
 public class Food : Identity
-{
-    [SerializeField] protected string foodCategory;
+{   public foodCategory _foodCategory;
     [SerializeField] public bool isCooked;
     
-
     public override void ShowIdentity()
     {
         base.ShowIdentity();
-        Debug.Log($"Food Category: {foodCategory}, Cooked: {isCooked}");
+        Debug.Log($"Food Category: {_foodCategory.ToString()}, Cooked: {isCooked}");
     }
     
 
