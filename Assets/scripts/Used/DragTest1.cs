@@ -8,7 +8,7 @@ public class DragTest1 : MonoBehaviour
     [SerializeField] private Camera _camera;
     private Vector2 _startTouchPosition;
     private Vector2 _startObjectPosition;
-    [SerializeField] private bool _isDragging;
+    [SerializeField] public bool _isDragging;
 
     [SerializeField] private PlayerInput playerInput;
     [SerializeField] private InputAction TouchPerformedAction, TouchStartAction;
@@ -46,19 +46,15 @@ public class DragTest1 : MonoBehaviour
             _draggedObject = null;
             Vector2 touch = TouchPerformedAction.ReadValue<Vector2>();
             RaycastHit2D rayHit = Physics2D.GetRayIntersection(Camera.main.ScreenPointToRay(touch));
+
             // detect here
-            if (rayHit.collider != null && rayHit.collider.CompareTag("Draggable"))
+            if (rayHit.collider != null && rayHit.collider.CompareTag("Food"))
             {
-                Debug.Log("Is OnTouchStart rayhit ");
+                //Debug.Log("Is OnTouchStart rayhit ");
                 _draggedObject = rayHit.collider.gameObject; // วัตถุที่จะถูกลาก
                 _startTouchPosition = _camera.ScreenToWorldPoint(touch);
                 _startObjectPosition = _draggedObject.transform.position; // เก็บตำแหน่งเริ่มต้นของวัตถุ
                 _isDragging = true;
-            }
-
-            if (rayHit.collider != null && rayHit.collider.CompareTag("changepage"))
-            {
-                
             }
     }
 
@@ -67,7 +63,7 @@ public class DragTest1 : MonoBehaviour
         //Debug.Log("Is OnTouchPerformed");
         if (_isDragging)
         {
-            Debug.Log("Is OnTouchPerformed rayhit ");
+            //Debug.Log("Is OnTouchPerformed rayhit ");
             Vector2 touch = TouchPerformedAction.ReadValue<Vector2>();
             Vector2 worldPosition = _camera.ScreenToWorldPoint(touch);
             Vector2 offset = worldPosition - _startTouchPosition;
@@ -86,10 +82,10 @@ public class DragTest1 : MonoBehaviour
         //Debug.Log("Is OnTouchEnd");
          if (_isDragging)
         {
-            Debug.Log("Is OnTouchEnd end");
             _isDragging = false;
             _draggedObject = null;
         }
+        
         
     }
 

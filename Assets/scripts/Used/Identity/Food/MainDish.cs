@@ -2,24 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SideDish : Food
+public class MainDish : Food
 {
     void Start()
     {
         _objectType = objectType.Food;
-        _foodCategory = foodCategory.SideDish;
-        isCooked = false; 
-        GetComponent<SpriteRenderer>().color = Color.red;
+        _foodCategory = foodCategory.MainDish;
+        isCooked = true; 
     }
 
-    public void Cooked(bool isCooked)
-    {
-        if(isCooked == true)
-        {
-            GetComponent<SpriteRenderer>().color = Color.green;
-        }
-        
-    }
 
     // public override void OnTriggerEnter2D(Collider2D other)
     // {
@@ -29,8 +20,9 @@ public class SideDish : Food
     //     // เพิ่มพฤติกรรมเพิ่มเติมสำหรับคลาสลูก
     //     if (other.CompareTag("CookingTools"))
     //     {
-    //         Debug.Log("Derived: SideDish collided with Cooking Tool");
+    //         Debug.Log("Derived: MainDish collided with Cooking Tool");
     //     }
     // }
+
     
 }
