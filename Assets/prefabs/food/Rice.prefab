@@ -29,8 +29,8 @@ Transform:
   m_GameObject: {fileID: 2846097791813220626}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.2274995, y: -1.5211279, z: 0}
-  m_LocalScale: {x: 0.07931608, y: 0.25972307, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -138,7 +138,7 @@ MonoBehaviour:
   _objectType: 0
   _foodCategory: 0
   isCooked: 0
-  dragSystem: {fileID: 0}
+  dragSystem: {fileID: 2171606685723709359, guid: 7765b6c6f48092d469395773b7ed579e, type: 3}
 --- !u!50 &6726733552808646052
 Rigidbody2D:
   serializedVersion: 4

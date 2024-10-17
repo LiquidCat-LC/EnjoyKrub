@@ -7,14 +7,8 @@ public class Curry : Food
     
     void Start()
     {
-        _objectType = objectType.Food;
         _foodCategory = foodCategory.Curry;
         isCooked = true; 
     }
 
-
-    void Update()
-    {
-        
-    }
 }
