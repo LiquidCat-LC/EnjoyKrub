@@ -9,12 +9,21 @@ public enum foodCategory
     Curry
 }
 
+public enum CookingState
+{
+    Raw,        
+    Cooked,     
+    Overcooked  
+}
+
 public class Food : Identity
 {   
-    public foodCategory _foodCategory;
-    [SerializeField] public bool isCooked;
-    [SerializeField] public GameObject dragSystem;
-    
+    //เก็บไว้
+    protected foodCategory _foodCategory;
+
+    //โดนยืมแน่
+    public GameObject dragSystem;
+    public CookingState cookingState;
     void Awake()
     {
         _objectType = objectType.Food;
@@ -22,7 +31,7 @@ public class Food : Identity
     public override void ShowIdentity()
     {
         base.ShowIdentity();
-        Debug.Log($"Food Category: {_foodCategory.ToString()}, Cooked: {isCooked}");
+        Debug.Log($"Food Category: {_foodCategory.ToString()}, CookingState: {cookingState}");
     }
 
 }

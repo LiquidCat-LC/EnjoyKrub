@@ -4,20 +4,35 @@ using UnityEngine;
 
 public class SideDish : Food
 {
+    public float cookingTime; 
+    public float maxCookingTime; 
     void Start()
     {
         _foodCategory = foodCategory.SideDish;
-        isCooked = false; 
+        cookingState = CookingState.Raw;  
         GetComponent<SpriteRenderer>().color = Color.red;
     }
 
-    public void Cooked(bool isCooked)
+    public void AlreadyCooked(CookingState CookingState)
     {
-        if(isCooked == true)
+        switch(cookingState)
         {
-            GetComponent<SpriteRenderer>().color = Color.green;
+        case CookingState.Raw:
+        GetComponent<SpriteRenderer>().color = Color.red;
+        break;
+
+        case CookingState.Cooked:
+        GetComponent<SpriteRenderer>().color = Color.green;
+        break;
+
+        case CookingState.Overcooked:
+        GetComponent<SpriteRenderer>().color = Color.blue;
+        break;
+
+        default:
+        Debug.LogWarning("Unknown cooking state.");
+        break;
         }
-        
     }
 
     

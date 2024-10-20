@@ -8,7 +8,7 @@ public class DragTest1 : MonoBehaviour
     [SerializeField] private Camera _camera;
     private Vector2 _startTouchPosition;
     private Vector2 _startObjectPosition;
-    [SerializeField] public bool _isDragging;
+    public bool _isDragging;
 
     [SerializeField] private PlayerInput playerInput;
     [SerializeField] private InputAction TouchPerformedAction, TouchStartAction;

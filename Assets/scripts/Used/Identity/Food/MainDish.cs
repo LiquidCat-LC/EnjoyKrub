@@ -7,7 +7,7 @@ public class MainDish : Food
     void Start()
     {
         _foodCategory = foodCategory.MainDish;
-        isCooked = true; 
+        cookingState = CookingState.Cooked; 
     }
 
     

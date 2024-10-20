@@ -8,7 +8,7 @@ public class Curry : Food
     void Start()
     {
         _foodCategory = foodCategory.Curry;
-        isCooked = true; 
+        cookingState = CookingState.Cooked; 
     }
 
 }

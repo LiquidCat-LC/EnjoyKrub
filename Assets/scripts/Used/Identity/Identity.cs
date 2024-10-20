@@ -15,7 +15,7 @@ public class Identity : MonoBehaviour
     public string GetObjectType() => _objectType.ToString();
     public virtual void ShowIdentity()
     {
-       // Debug.Log($"Object Name: {objectName}, Object Type: {_objectType.ToString()}");
+       Debug.Log($"Object Name: {objectName}, Object Type: {_objectType.ToString()}");
     }
 
     
