@@ -13,7 +13,7 @@ public class IngredientTools : Tools
 
     public void OnTriggerEnter2D(Collider2D other)
     {  
-        if (transform.childCount == 1 && other.name == ingredient.name)
+        if (transform.childCount == 1 && other.GetComponent<Food>()._itemname == ingredient.GetComponent<Food>()._itemname)
         {
             Destroy(transform.GetChild(0).gameObject);
         }

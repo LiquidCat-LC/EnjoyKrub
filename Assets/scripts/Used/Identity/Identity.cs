@@ -9,13 +9,13 @@ public enum objectType
 }
 public class Identity : MonoBehaviour
 {
-    [SerializeField] protected string objectName;
+    [SerializeField] public string _itemname;
     [SerializeField] protected objectType _objectType;
-    //public string GetObjectName() => objectName;
+    //public string GetObjectName() objectName=> ;
     public string GetObjectType() => _objectType.ToString();
     public virtual void ShowIdentity()
     {
-       Debug.Log($"Object Name: {objectName}, Object Type: {_objectType.ToString()}");
+       Debug.Log($"Object Name: {_itemname}, Object Type: {_objectType.ToString()}");
     }
 
     
