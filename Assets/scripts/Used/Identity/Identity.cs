@@ -11,7 +11,7 @@ public class Identity : MonoBehaviour
 {
     [SerializeField] protected string objectName;
     [SerializeField] protected objectType _objectType;
-    public string GetObjectName() => objectName;
+    //public string GetObjectName() => objectName;
     public string GetObjectType() => _objectType.ToString();
     public virtual void ShowIdentity()
     {
