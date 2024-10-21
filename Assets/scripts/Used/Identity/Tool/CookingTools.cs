@@ -1,51 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
-public class CookingTools : Identity
+
+public class CookingTools : Tools
 {
-    public GameObject dragSystem;
-    public bool isReady = false;
     public bool isCooking = false;
     
     void Awake()
     {
-        _objectType = objectType.CookingTool;
+        isCooking = false;
+        _toolCategory = toolCategory.CookingTool;
     }
 
 #region Detect Food
-    public virtual void OnTriggerStay2D(Collider2D other)
+    public override void OnTriggerStay2D(Collider2D other)
     {   
-        bool drag = dragSystem.GetComponent<DragTest1>()._isDragging;
-        if (transform.childCount == 0 && drag == false)
+        base.OnTriggerStay2D(other);
+
+        if (transform.childCount == 1 && other.CompareTag("Food"))
         {
-            if (other.CompareTag("Food"))
+            SideDish SideDishScript = GetComponentInChildren<SideDish>();
+
+            if (SideDishScript != null && !isCooking)
             {
-                other.transform.SetParent(transform);
-                other.transform.position = transform.position + new Vector3(0,0,-2);
-                SideDish SideDishScript = GetComponentInChildren<SideDish>();
-                if(SideDishScript != null)
-                {
-                    Debug.Log("Start");
-                    isReady = true;
-                    StartCoroutine(Cooking(SideDishScript));
-                }
-                
+                isReady = true;
+                StartCoroutine(Cooking(SideDishScript));
             }
         }
         
+        
     }
 
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.CompareTag("Food") &&  other.transform.parent == transform)
-        {
-            other.transform.SetParent(null);
-            isReady = false;
-            //Debug.Log("Exit");
-        }
-       
-    }
 #endregion
 
 
@@ -54,6 +41,7 @@ public class CookingTools : Identity
         Debug.Log(sideDish);
         if (sideDish != null)
         {
+            isCooking = true;
             while (sideDish.cookingTime > -sideDish.maxCookingTime)
             {
         
@@ -63,14 +51,14 @@ public class CookingTools : Identity
                 {
                     Debug.Log("Food is now cooked!");
                     sideDish.cookingState = CookingState.Cooked;
-                    sideDish.AlreadyCooked(CookingState.Cooked);
+                    sideDish.CookingStatus(CookingState.Cooked);
                 }
 
                 if (sideDish.cookingTime <= -sideDish.maxCookingTime && sideDish.cookingState != CookingState.Overcooked)
                 {
                     Debug.Log("Food is overcooked!");
                     sideDish.cookingState = CookingState.Overcooked;
-                    sideDish.AlreadyCooked(CookingState.Cooked);
+                    sideDish.CookingStatus(CookingState.Cooked);
                     break; 
                 }
 
