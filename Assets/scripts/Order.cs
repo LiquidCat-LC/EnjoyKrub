@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Order : MonoBehaviour
 {
-    public Menu menu;
+   
     
 
     // Start is called before the first frame update

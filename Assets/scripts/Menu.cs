@@ -6,18 +6,24 @@ using Random = System.Random;
 
 public class Menu : MonoBehaviour
 {
-    public int h = 1;
-    public List<string> mainDishes = new List<string> {"Rice","Fried Rice","Rice Berry" };
-    public List<string> sideDishes = new List<string> {"French", "Fried Chicken","Grilled Shrimp" };
-    public List<string> curries = new List<string> {"Green Curry", "Phanaeng", "Southern Curry" };
+    public int orders = 5;
+    public string[] mainDishes = new string[] {"Rice","Fried Rice","Rice Berry" };
+    public string[] sideDishes = new string[] {"French", "Fried Chicken","Grilled Shrimp" };
+    public string[] curries = new string[] {"Green Curry", "Phanaeng", "Southern Curry" };
     Random random = new Random();
+    
     
     // Start is called before the first frame update
     void Start()
     {
-        for (int a = 0; a < a; a++)
+        for (int a = 0; a < orders; a++)
         {
-            random.Next(mainDishes.Count-1);
+            int r1 = random.Next(mainDishes.Length-1);
+            int r2 = random.Next(sideDishes.Length-1);
+            int r3 = random.Next(curries.Length-1);
+            Debug.Log(mainDishes[r1]);
+            Debug.Log(sideDishes[r2]);
+            Debug.Log(curries[r3]);
         }
     }
 
