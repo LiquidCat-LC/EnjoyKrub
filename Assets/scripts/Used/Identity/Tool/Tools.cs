@@ -15,6 +15,8 @@ public class Tools : Identity
     //โดนยืมแน่
     public GameObject dragSystem;
     public bool isReady = false;
+    public GameObject table;
+
     
     void Awake()
     {
@@ -41,13 +43,20 @@ public class Tools : Identity
 
     public virtual void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Food") &&  other.transform.parent == transform)
+        Food food = other.GetComponent<Food>();
+
+        if (food != null && table != null)
         {
-            other.transform.SetParent(null);
-            isReady = false;
-            //Debug.Log("Exit");
+            other.transform.SetParent(table.transform);
         }
-       
+        else
+        {
+            Debug.LogWarning("Food or table is null.");
+            other.transform.SetParent(null);
+        }
+
+        isReady = false;
+        
     }
 #endregion
 

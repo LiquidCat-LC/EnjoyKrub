@@ -134,11 +134,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18b8dbe48b1acf447b99df0ea4f376aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectName: Rice
+  _itemname: Rice
   _objectType: 0
-  _foodCategory: 0
-  isCooked: 0
   dragSystem: {fileID: 2171606685723709359, guid: 7765b6c6f48092d469395773b7ed579e, type: 3}
+  cookingState: 0
+  isNewlyCreated: 1
+  table: {fileID: 6598127324254017525, guid: c56aaa33fe0f3a34f9c2737bb336d532, type: 3}
 --- !u!50 &6726733552808646052
 Rigidbody2D:
   serializedVersion: 4

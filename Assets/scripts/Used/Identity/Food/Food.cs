@@ -24,6 +24,7 @@ public class Food : Identity
     //โดนยืมแน่
     public GameObject dragSystem;
     public CookingState cookingState;
+    public bool isNewlyCreated = true;
     void Awake()
     {
         _objectType = objectType.Food;
