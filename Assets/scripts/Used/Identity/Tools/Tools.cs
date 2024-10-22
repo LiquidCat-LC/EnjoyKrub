@@ -16,6 +16,7 @@ public class Tools : Identity
     public GameObject dragSystem;
     public bool isReady = false;
     public GameObject table;
+    public bool readyToSwitch;
 
     
     void Awake()
@@ -45,15 +46,15 @@ public class Tools : Identity
     {
         Food food = other.GetComponent<Food>();
 
-        if (food != null && table != null)
+        if (food != null && table != null && !readyToSwitch)
         {
             other.transform.SetParent(table.transform);
         }
-        else
-        {
-            Debug.LogWarning("Food or table is null.");
-            other.transform.SetParent(null);
-        }
+        // else
+        // {
+        //     Debug.LogWarning("Food or table is null.");
+        //     other.transform.SetParent(null);
+        // }
 
         isReady = false;
         

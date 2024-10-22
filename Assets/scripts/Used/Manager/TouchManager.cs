@@ -18,15 +18,16 @@ public class TouchManager : MonoBehaviour
     //f2
     [SerializeField] private GameObject[] tablePanels;
     private int page = 0;
-    
+    //Tools tool;
+
 
     private void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
         touchPressAction = playerInput.actions["TouchPress"];
         touchPositionAction = playerInput.actions["TouchPosition"];
-        
-        
+
+
     }
 
     private void OnEnable()
@@ -36,10 +37,10 @@ public class TouchManager : MonoBehaviour
 
     private void OnDisable()
     {
-        touchPressAction.performed -= TouchPressed; 
+        touchPressAction.performed -= TouchPressed;
     }
 
-     private void TouchPressed(InputAction.CallbackContext context)
+    private void TouchPressed(InputAction.CallbackContext context)
     {
         //check 
         float value = context.ReadValue<float>();
@@ -47,13 +48,13 @@ public class TouchManager : MonoBehaviour
 
         //check tag
         var rayHit = Physics2D.GetRayIntersection(Camera.main.ScreenPointToRay(touchPositionAction.ReadValue<Vector2>()));
-        if(rayHit.collider != null)
+        if (rayHit.collider != null)
         {
             Debug.Log(rayHit.collider.tag);
         }
 
         //function 1
-        if(rayHit.collider != null && rayHit.collider.CompareTag("Cooking"))
+        if (rayHit.collider != null && rayHit.collider.CompareTag("Cooking"))
         {
             GameObject RaycastReturn = rayHit.collider.gameObject;
             Debug.Log(rayHit.collider.tag);
@@ -61,7 +62,7 @@ public class TouchManager : MonoBehaviour
         }
 
         //Function 2
-        if(rayHit.collider != null && rayHit.collider.CompareTag("panel"))
+        if (rayHit.collider != null && rayHit.collider.CompareTag("panel"))
         {
             Debug.Log(tablePanels.Length);
             Debug.Log("Change panel");
@@ -76,23 +77,66 @@ public class TouchManager : MonoBehaviour
         timer.gameObject.SetActive(true);
     }
     
+    #region Change Panel
     private void changePanel()
     {
-        Debug.Log(page);
+        Debug.Log("Page:" + page);
+        StartCoroutine(DeactivateAndSwitchPanel(tablePanels[page]));
+    }
+    IEnumerator DeactivateAndSwitchPanel(GameObject currentPanel)
+    {
+        DeactivateChildren(currentPanel);
 
-        if(page >= 2)
+        yield return new WaitForEndOfFrame();
+
+        if (page >= 2)
         {
-            tablePanels[page].SetActive(false);
+            currentPanel.SetActive(false);
             page = 0;
             tablePanels[page].SetActive(true);
-        } 
-        else 
+        }
+        else
         {
-            tablePanels[page].SetActive(false);
-            page +=1;
+            currentPanel.SetActive(false);
+            page += 1;
             tablePanels[page].SetActive(true);
         }
-        
-        
+
+        ActivateChildren(currentPanel);
     }
+
+    void DeactivateChildren(GameObject parent)
+    {
+        if (parent != null)
+        {
+            foreach (Transform child in parent.transform)
+            {
+                if (child.gameObject.GetComponent<Tools>() != null)
+                {
+                    child.gameObject.GetComponent<Tools>().readyToSwitch = true;
+                }
+
+                child.gameObject.SetActive(false);
+                DeactivateChildren(child.gameObject);
+            }
+        }
+    }
+
+    void ActivateChildren(GameObject parent)
+    {
+        if (parent != null)
+        {
+            foreach (Transform child in parent.transform)
+            {
+                if (child.gameObject.GetComponent<Tools>() != null)
+                {
+                    child.gameObject.GetComponent<Tools>().readyToSwitch = false;
+                }
+
+                child.gameObject.SetActive(true);
+                ActivateChildren(child.gameObject);
+            }
+        }
+    }
+    #endregion
 }

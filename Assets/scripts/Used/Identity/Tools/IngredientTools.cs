@@ -12,7 +12,8 @@ public class IngredientTools : Tools
     {
         _toolCategory = toolCategory.IngredientTool;
     }
-
+    
+#region Detect Food
     public void OnTriggerEnter2D(Collider2D other)
     {   
         Destroy(other);
@@ -23,7 +24,13 @@ public class IngredientTools : Tools
         base.OnTriggerStay2D(other);
         Destroy(other);
     }
-
+    public override void OnTriggerExit2D(Collider2D other)
+    {
+        base.OnTriggerExit2D(other);
+        other.GetComponent<Food>().isNewlyCreated=false;
+        CheckAndSpawn();
+    }
+#endregion
     void Destroy(Collider2D other)
     {
         Food otherFood = other.GetComponent<Food>();
@@ -34,30 +41,15 @@ public class IngredientTools : Tools
             Destroy(transform.GetChild(0).gameObject);
         }
     }
-
-    void SpawnPrefab()
-    {
-        GameObject newObject = Instantiate(ingredient, transform.position + spawnIngredPos , Quaternion.identity);
-        newObject.transform.SetParent(transform);
-        newObject.GetComponent<Food>().isNewlyCreated=true;
-        Debug.Log("New prefab created.");
-
-    }
     void CheckAndSpawn()
     {
-
         if (transform.childCount == 0)
         {
-            SpawnPrefab();
+            GameObject newObject = Instantiate(ingredient, transform.position + spawnIngredPos , Quaternion.identity);
+            newObject.transform.SetParent(transform);
+            newObject.GetComponent<Food>().isNewlyCreated=true;
+            Debug.Log("New prefab created.");
         }
-
-    }
-    
-    public override void OnTriggerExit2D(Collider2D other)
-    {
-        base.OnTriggerExit2D(other);
-        other.GetComponent<Food>().isNewlyCreated=false;
-        CheckAndSpawn();
     }
 
 }

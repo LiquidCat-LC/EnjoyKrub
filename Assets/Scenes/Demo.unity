@@ -997,6 +997,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2096693592}
     - target: {fileID: 5210320183414699939, guid: c56aaa33fe0f3a34f9c2737bb336d532, type: 3}
+      propertyPath: table
+      value: 
+      objectReference: {fileID: 285293595}
+    - target: {fileID: 5210320183414699939, guid: c56aaa33fe0f3a34f9c2737bb336d532, type: 3}
       propertyPath: dragSystem
       value: 
       objectReference: {fileID: 2096693592}
@@ -1065,7 +1069,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 6073433552822894726, guid: c56aaa33fe0f3a34f9c2737bb336d532, type: 3}
+    - {fileID: 7199763462248849708, guid: c56aaa33fe0f3a34f9c2737bb336d532, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 6598127324254017525, guid: c56aaa33fe0f3a34f9c2737bb336d532, type: 3}
