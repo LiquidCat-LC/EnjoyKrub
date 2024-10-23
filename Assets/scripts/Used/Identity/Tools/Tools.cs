@@ -58,8 +58,7 @@ public class Tools : Identity
         // }
 
         isReady = false;
-        
-
+        other.GetComponent<Food>().isNewlyCreated = false;
     }
     #endregion
 

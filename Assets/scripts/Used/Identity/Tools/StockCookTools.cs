@@ -27,7 +27,7 @@ public class StockCookTool : Tools
         {
             MainDish MainDishScript = GetComponentInChildren<MainDish>();
 
-            if (MainDishScript != null && !isCooking && isOutOfStock == true)
+            if (MainDishScript != null && !isCooking && isOutOfStock == true && MainDishScript.cookingState== CookingState.Raw)
             {
                 isReady = true;
                 cookingCoroutine = StartCoroutine(Cooking(MainDishScript));
@@ -63,6 +63,7 @@ public class StockCookTool : Tools
         if (mainDish != null)
         {
             isCooking = true;
+            
             while (mainDish.cookingTime > 0)
             {
                 mainDish.cookingTime -= Time.deltaTime;
@@ -73,6 +74,7 @@ public class StockCookTool : Tools
             mainDish.CookingStatus(CookingState.Cooked);
             mainDish.isNewlyCreated = true;
             stock = mainDish.stock;
+
             Debug.Log("Stock :" + stock);
             isCooking = false;
             isOutOfStock = (stock <= 0);
