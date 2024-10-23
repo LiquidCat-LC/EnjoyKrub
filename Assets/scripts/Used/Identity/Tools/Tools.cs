@@ -5,30 +5,31 @@ using UnityEngine;
 public enum toolCategory
 {
     IngredientTool,
-    CookingTool
+    CookingTool,
+    RepeatCookTool
 }
 public class Tools : Identity
 {
     //เก็บไว้
     protected toolCategory _toolCategory;
-    
+
     //โดนยืมแน่
     public GameObject dragSystem;
     public bool isReady = false;
     public GameObject table;
     public bool readyToSwitch;
 
-    
+
     void Awake()
     {
         isReady = false;
         _objectType = objectType.CookingTool;
     }
 
-    
-#region Detect Food
+
+    #region Detect Food
     public virtual void OnTriggerStay2D(Collider2D other)
-    {   
+    {
         bool drag = dragSystem.GetComponent<DragTest1>()._isDragging;
         if (transform.childCount == 0 && drag == false)
         {
@@ -36,10 +37,10 @@ public class Tools : Identity
             {
                 isReady = true;
                 other.transform.SetParent(transform);
-                other.transform.position = transform.position + new Vector3(0,0,-2);  
+                other.transform.position = transform.position + new Vector3(0, 0, -2);
             }
         }
-        
+
     }
 
     public virtual void OnTriggerExit2D(Collider2D other)
@@ -58,8 +59,9 @@ public class Tools : Identity
 
         isReady = false;
         
-    }
-#endregion
 
- 
+    }
+    #endregion
+
+
 }

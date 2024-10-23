@@ -26,8 +26,6 @@ public class TouchManager : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
         touchPressAction = playerInput.actions["TouchPress"];
         touchPositionAction = playerInput.actions["TouchPosition"];
-
-
     }
 
     private void OnEnable()
@@ -76,7 +74,7 @@ public class TouchManager : MonoBehaviour
         objToChange.GetComponent<SpriteRenderer>().color = Color.green;
         timer.gameObject.SetActive(true);
     }
-    
+
     #region Change Panel
     private void changePanel()
     {

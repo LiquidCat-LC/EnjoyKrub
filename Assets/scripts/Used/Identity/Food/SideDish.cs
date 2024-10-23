@@ -12,28 +12,5 @@ public class SideDish : Food
         cookingState = CookingState.Raw;  
         GetComponent<SpriteRenderer>().color = Color.red;
     }
-
-    public void CookingStatus(CookingState CookingState)
-    {
-        switch(cookingState)
-        {
-        case CookingState.Raw:
-        GetComponent<SpriteRenderer>().color = Color.red;
-        break;
-
-        case CookingState.Cooked:
-        GetComponent<SpriteRenderer>().color = Color.green;
-        break;
-
-        case CookingState.Overcooked:
-        GetComponent<SpriteRenderer>().color = Color.blue;
-        break;
-
-        default:
-        Debug.LogWarning("Unknown cooking state.");
-        break;
-        }
-    }
-
     
 }
