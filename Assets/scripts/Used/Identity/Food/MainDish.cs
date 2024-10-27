@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class MainDish : Food
 {
-    void Start()
+    public float cookingTime;
+    public int stock;
+    void Awake()
     {
         _foodCategory = foodCategory.MainDish;
-        cookingState = CookingState.Cooked; 
+        cookingState = CookingState.Raw; 
     }
 
     

@@ -35,4 +35,27 @@ public class Food : Identity
         Debug.Log($"Food Category: {_foodCategory.ToString()}, CookingState: {cookingState}");
     }
 
+    public void CookingStatus(CookingState CookingState)
+    {
+        switch(cookingState)
+        {
+        case CookingState.Raw:
+        GetComponent<SpriteRenderer>().color = Color.red;
+        break;
+
+        case CookingState.Cooked:
+        GetComponent<SpriteRenderer>().color = Color.green;
+        break;
+
+        case CookingState.Overcooked:
+        GetComponent<SpriteRenderer>().color = Color.blue;
+        break;
+
+        default:
+        Debug.LogWarning("Unknown cooking state.");
+        break;
+        }
+    }
+
+
 }
