@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class Order : MonoBehaviour
 {
-   
     
-
     // Start is called before the first frame update
     void Start()
     {
