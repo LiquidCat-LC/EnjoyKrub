@@ -1,12 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using Random = System.Random;
 
-public class Menu : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
+    //เหลือเปลี่ยน string[] เป็น Gameobject[]
     public static int orD = 3;
     public Orders[] ordersMenu = new Orders[orD];
     public string[] mainDishes = new string[] {"Rice","Fried Rice","Rice Berry" };
@@ -29,7 +31,17 @@ public class Menu : MonoBehaviour
         {
             ordersMenu[a] = new Orders(){mainDish = mainDishes[random.Next(mainDishes.Length-1)], 
                 sideDish = sideDishes[random.Next(sideDishes.Length-1)], curry = curries[random.Next(curries.Length-1)]};
+            
+                Debug.Log("Order : "+a);
+                Debug.Log(ordersMenu[a].mainDish);
+                Debug.Log(ordersMenu[a].sideDish);
+                Debug.Log(ordersMenu[a].curry);
+                
         }
+        CallOrder(ordersMenu,1);
+        RemoveOrder(ordersMenu, 2);
+        CallOrder(ordersMenu,1);
+        
     }
 
     // Update is called once per frame
@@ -38,9 +50,22 @@ public class Menu : MonoBehaviour
         
     }
 
-    public void CallOrders(Orders[] orders)
+    public void CallOrder(Orders[] order,int num)
     {
-        
+        Debug.Log("Order #"+num);
+        Debug.Log(order[num].mainDish);
+        Debug.Log(order[num].sideDish);
+        Debug.Log(order[num].curry);
+        //gameObject.SetActive(true);
+        //Debug.Log(gameObject.name);
     }
-    
+
+    public Orders[] RemoveOrder(Orders[] order, int num)
+    {
+        var orderList = order.ToList();
+        orderList.RemoveAt(num);
+        var ordersArray = orderList.ToArray();
+        return ordersArray;
+    }
 }
+    
