@@ -71,7 +71,7 @@ public class StockCookTool : Tools
                 yield return null;
             }
             mainDish.cookingState = CookingState.Cooked;
-            mainDish.CookingStatus(CookingState.Cooked);
+            mainDish.SetCookingStatus(CookingState.Cooked);
             mainDish.isNewlyCreated = true;
             stock = mainDish.stock;
 

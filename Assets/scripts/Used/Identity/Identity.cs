@@ -9,6 +9,7 @@ public enum objectType
 }
 public class Identity : MonoBehaviour
 {
+    [Header("Identity")]
     [SerializeField] public string _itemname;
     [SerializeField] protected objectType _objectType;
     //public string GetObjectName() objectName=> ;

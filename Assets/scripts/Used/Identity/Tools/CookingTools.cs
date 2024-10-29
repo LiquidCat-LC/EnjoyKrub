@@ -8,6 +8,7 @@ public class CookingTools : Tools
 {
     public bool isCooking = false;
     private Coroutine cookingCoroutine;
+    public List<GameObject> allowedFoodPrefabs;
 
     void Awake()
     {
@@ -22,12 +23,17 @@ public class CookingTools : Tools
 
         if (transform.childCount == 1 && other.CompareTag("Food"))
         {
+    
             SideDish SideDishScript = GetComponentInChildren<SideDish>();
 
-            if (SideDishScript != null && !isCooking)
+            foreach (GameObject food in allowedFoodPrefabs)
             {
-                isReady = true;
-                cookingCoroutine = StartCoroutine(Cooking(SideDishScript));
+                Food foodd = food.GetComponent<Food>();
+                if (SideDishScript != null && !isCooking && foodd._itemname == SideDishScript._itemname )
+                {
+                    isReady = true;
+                    cookingCoroutine = StartCoroutine(Cooking(SideDishScript));
+                }
             }
         }
 
@@ -50,6 +56,11 @@ public class CookingTools : Tools
 
     private IEnumerator Cooking(SideDish sideDish)
     {
+        if (sideDish.cookingState == CookingState.Ingred)
+        {
+            sideDish.cookingState = CookingState.Raw;
+            sideDish.SetCookingStatus(CookingState.Raw);
+        }
         //Debug.Log(sideDish);
         if (sideDish != null)
         {
@@ -63,14 +74,14 @@ public class CookingTools : Tools
                 {
                     Debug.Log("Food is now cooked!");
                     sideDish.cookingState = CookingState.Cooked;
-                    sideDish.CookingStatus(CookingState.Cooked);
+                    sideDish.SetCookingStatus(CookingState.Cooked);
                 }
 
                 if (sideDish.cookingTime <= -sideDish.maxCookingTime && sideDish.cookingState != CookingState.Overcooked)
                 {
                     Debug.Log("Food is overcooked!");
                     sideDish.cookingState = CookingState.Overcooked;
-                    sideDish.CookingStatus(CookingState.Cooked);
+                    sideDish.SetCookingStatus(CookingState.Overcooked);
                     break;
                 }
 
