@@ -37,7 +37,7 @@ public class IngredientTools : Tools
         Food otherFood = other.GetComponent<Food>();
         Food ingredientFood = ingredPrefab.GetComponent<Food>();
 
-        if (transform.childCount == 1 && otherFood._itemname == ingredientFood._itemname  && !otherFood.isNewlyCreated && otherFood.cookingState == CookingState.Raw)
+        if (transform.childCount == 1 && otherFood._itemname == ingredientFood._itemname  && !otherFood.isNewlyCreated && otherFood.cookingState == CookingState.Ingred)
         {
             Destroy(transform.GetChild(0).gameObject);
         }

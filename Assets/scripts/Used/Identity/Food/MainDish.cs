@@ -6,10 +6,10 @@ public class MainDish : Food
 {
     public float cookingTime;
     public int stock;
-    void Awake()
+    void Start()
     {
         _foodCategory = foodCategory.MainDish;
-        cookingState = CookingState.Raw; 
+        cookingState = CookingState.Ingred; 
     }
 
     
