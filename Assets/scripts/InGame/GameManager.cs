@@ -67,5 +67,15 @@ public class GameManager : MonoBehaviour
         var ordersArray = orderList.ToArray();
         return ordersArray;
     }
+
+    public int GetMoney()
+    {
+        //if (gameobject(plate) == gameobject(order))
+        //{
+            //RemoveOrder();
+        //}
+        int money = random.Next(37, 80);
+        return money;
+    }
 }
     
