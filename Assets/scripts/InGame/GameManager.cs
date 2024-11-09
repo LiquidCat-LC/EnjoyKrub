@@ -8,51 +8,56 @@ using Random = System.Random;
 
 public class GameManager : MonoBehaviour
 {
-    //เหลือเปลี่ยน string[] เป็น Gameobject[]
-    public static int orD = 3;
-    public Orders[] ordersMenu = new Orders[orD];
-    public string[] mainDishes = new string[] {"Rice","Fried Rice","Rice Berry" };
-    public string[] sideDishes = new string[] {"French", "Fried Chicken","Grilled Shrimp" };
-    public string[] curries = new string[] {"Green Curry", "Phanaeng", "Southern Curry" };
+    public int money;
+    public GameObject plate;
+
+    [Header("What can Order")]
+    public GameObject[] mainDishes;
+    public GameObject[] sideDishes;
+    public GameObject[] curries;
     Random random = new Random();
-    
+
+    public static int orD = 1;
+    public Orders[] ordersMenu = new Orders[orD];
+
+    [System.Serializable]
     public class Orders
     {
-        public string mainDish;
-        public string sideDish;
-        public string curry;
+        public GameObject mainDish;
+        public GameObject sideDish;
+        public GameObject curry;
     }
-  
-    
-    // Start is called before the first frame update
+
     void Start()
+    {
+        RandomOrder();
+        //CallOrder(ordersMenu,1);
+        //RemoveOrder(ordersMenu, 2);
+        //CallOrder(ordersMenu,1);
+    }
+
+    [ContextMenu("RandomOrder")]
+    public void RandomOrder()
     {
         for (int a = 0; a < orD; a++)
         {
-            ordersMenu[a] = new Orders(){mainDish = mainDishes[random.Next(mainDishes.Length-1)], 
-                sideDish = sideDishes[random.Next(sideDishes.Length-1)], curry = curries[random.Next(curries.Length-1)]};
-            
-                Debug.Log("Order : "+a);
-                Debug.Log(ordersMenu[a].mainDish);
-                Debug.Log(ordersMenu[a].sideDish);
-                Debug.Log(ordersMenu[a].curry);
-                
+            ordersMenu[a] = new Orders()
+            {
+                mainDish = mainDishes[random.Next(mainDishes.Length)],
+                sideDish = sideDishes[random.Next(sideDishes.Length)],
+                curry = curries[random.Next(curries.Length)]
+            };
+
+            // Debug.Log("Order : " + a);
+            // Debug.Log(ordersMenu[a].mainDish);
+            // Debug.Log(ordersMenu[a].sideDish);
+            // Debug.Log(ordersMenu[a].curry);
         }
-        CallOrder(ordersMenu,1);
-        RemoveOrder(ordersMenu, 2);
-        CallOrder(ordersMenu,1);
-        
     }
 
-    // Update is called once per frame
-    void Update()
+    public void CallOrder(Orders[] order, int num)
     {
-        
-    }
-
-    public void CallOrder(Orders[] order,int num)
-    {
-        Debug.Log("Order #"+num);
+        Debug.Log("Order #" + num);
         Debug.Log(order[num].mainDish);
         Debug.Log(order[num].sideDish);
         Debug.Log(order[num].curry);
@@ -68,14 +73,37 @@ public class GameManager : MonoBehaviour
         return ordersArray;
     }
 
-    public int GetMoney()
+    public bool CheckOrder(Orders order)
     {
-        //if (gameobject(plate) == gameobject(order))
-        //{
-            //RemoveOrder();
-        //}
-        int money = random.Next(37, 80);
-        return money;
+        Plate plateScript = plate.GetComponent<Plate>();
+
+        bool isMainDishMatch = plateScript.mainDishOnPlate.GetComponent<Food>()._itemname  == order.mainDish.GetComponent<Food>()._itemname;
+        bool isSideDishMatch = plateScript.sideDishOnPlate.GetComponent<Food>()._itemname == order.sideDish.GetComponent<Food>()._itemname;
+        bool isCurryMatch = plateScript.curryOnPlate.GetComponent<Food>()._itemname == order.curry.GetComponent<Food>()._itemname;
+
+        return isMainDishMatch && isSideDishMatch && isCurryMatch;
+    }
+    public int GetMoney(int orDNum)
+    {
+        if (CheckOrder(ordersMenu[orDNum]) == true)
+        {
+            return money += random.Next(30, 80); ;
+        }
+        return money += 0;
+    }
+    public void Serving()
+    {
+        int orderIndex = 0;
+        CheckOrder(ordersMenu[orderIndex]);
+        if(CheckOrder(ordersMenu[orderIndex]) == true)
+        {
+            print("Correct");
+        }
+        else{
+            print("Wrong");
+        }
+        GetMoney(orderIndex);
+        RandomOrder();
     }
 }
-    
+

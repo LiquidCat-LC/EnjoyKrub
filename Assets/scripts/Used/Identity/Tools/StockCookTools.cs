@@ -27,7 +27,7 @@ public class StockCookTool : Tools
         {
             MainDish MainDishScript = GetComponentInChildren<MainDish>();
 
-            if (MainDishScript != null && !isCooking && isOutOfStock == true && MainDishScript.cookingState == CookingState.Ingred)
+            if (MainDishScript != null && !isCooking && isOutOfStock == true && MainDishScript.cookingState != CookingState.Cooked &&MainDishScript.cookingState != CookingState.Overcooked)
             {
                 isReady = true;
                 cookingCoroutine = StartCoroutine(Cooking(MainDishScript));
@@ -102,6 +102,7 @@ public class StockCookTool : Tools
             if (stock > 0)
             {
                 GameObject newObject = Instantiate(stockPrefab, transform.position + spawnStockPos, Quaternion.identity);
+                newObject.transform.SetParent(transform);
                 newObject.GetComponent<Food>().isNewlyCreated = true;
             }
             isOutOfStock = (stock == 0);

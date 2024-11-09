@@ -19,7 +19,7 @@ public enum CookingState
 
 public class Food : Identity
 {   
-    protected foodCategory _foodCategory;
+    public foodCategory _foodCategory;
     //public GameObject dragSystem;
 
     [Header("State status")]
