@@ -5,17 +5,25 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using Random = System.Random;
+using UnityEngine.UI;
+using TMPro;
 
 public class GameManager : MonoBehaviour
-{
-    public int money;
-    public GameObject plate;
+{   [Header("Setting text")]
+    public TMP_Text mainDishOrderText;
+    public TMP_Text sideDishOrderText;
+    public TMP_Text curryOrderText;
 
-    [Header("What can Order")]
+    [Header("All menu")]
     public GameObject[] mainDishes;
     public GameObject[] sideDishes;
     public GameObject[] curries;
     Random random = new Random();
+
+    [Header("Overall")]
+    public int heart;
+    public int money;
+    public GameObject plate;
 
     public static int orD = 1;
     public Orders[] ordersMenu = new Orders[orD];
@@ -28,10 +36,11 @@ public class GameManager : MonoBehaviour
         public GameObject curry;
     }
 
+    
+
     void Start()
     {
         RandomOrder();
-        //CallOrder(ordersMenu,1);
         //RemoveOrder(ordersMenu, 2);
         //CallOrder(ordersMenu,1);
     }
@@ -48,19 +57,21 @@ public class GameManager : MonoBehaviour
                 curry = curries[random.Next(curries.Length)]
             };
 
-            // Debug.Log("Order : " + a);
-            // Debug.Log(ordersMenu[a].mainDish);
-            // Debug.Log(ordersMenu[a].sideDish);
-            // Debug.Log(ordersMenu[a].curry);
         }
+        CallOrder(ordersMenu[0]);
     }
 
-    public void CallOrder(Orders[] order, int num)
+    public void CallOrder(Orders order)
     {
-        Debug.Log("Order #" + num);
-        Debug.Log(order[num].mainDish);
-        Debug.Log(order[num].sideDish);
-        Debug.Log(order[num].curry);
+        // Debug.Log("Order #" + num);
+        // Debug.Log(order[num].mainDish);
+        // Debug.Log(order[num].sideDish);
+        // Debug.Log(order[num].curry);
+
+        mainDishOrderText.text = $"Main Dish: {order.mainDish.GetComponent<Food>()._itemname}";
+        sideDishOrderText.text = $"Side Dish: {order.sideDish.GetComponent<Food>()._itemname}";
+        curryOrderText.text = $"Curry: {order.curry.GetComponent<Food>()._itemname}";
+
         //gameObject.SetActive(true);
         //Debug.Log(gameObject.name);
     }
@@ -77,7 +88,12 @@ public class GameManager : MonoBehaviour
     {
         Plate plateScript = plate.GetComponent<Plate>();
 
-        bool isMainDishMatch = plateScript.mainDishOnPlate.GetComponent<Food>()._itemname  == order.mainDish.GetComponent<Food>()._itemname;
+        if (!plateScript.CheckCookedStatus())
+        {
+            return false;
+        }
+
+        bool isMainDishMatch = plateScript.mainDishOnPlate.GetComponent<Food>()._itemname == order.mainDish.GetComponent<Food>()._itemname;
         bool isSideDishMatch = plateScript.sideDishOnPlate.GetComponent<Food>()._itemname == order.sideDish.GetComponent<Food>()._itemname;
         bool isCurryMatch = plateScript.curryOnPlate.GetComponent<Food>()._itemname == order.curry.GetComponent<Food>()._itemname;
 
@@ -95,15 +111,31 @@ public class GameManager : MonoBehaviour
     {
         int orderIndex = 0;
         CheckOrder(ordersMenu[orderIndex]);
-        if(CheckOrder(ordersMenu[orderIndex]) == true)
+        if (CheckOrder(ordersMenu[orderIndex]) == true)
         {
             print("Correct");
         }
-        else{
+        else
+        {
             print("Wrong");
         }
         GetMoney(orderIndex);
         RandomOrder();
+    }
+
+    public void Redo()
+    {
+        Plate plateScript = plate.GetComponent<Plate>();
+        List<GameObject> dishes = plateScript.GetAllDishes();
+        foreach (GameObject food in dishes)
+        {
+            Destroy(food);
+        }
+        plateScript.mainDishOnPlate = null;
+        plateScript.sideDishOnPlate = null;
+        plateScript.curryOnPlate = null;
+
+        Debug.Log("All dishes on the plate have been reset.");
     }
 }
 

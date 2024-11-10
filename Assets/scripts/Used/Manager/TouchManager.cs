@@ -87,7 +87,7 @@ public class TouchManager : MonoBehaviour
 
         yield return new WaitForEndOfFrame();
 
-        if (page >= 2)
+        if (page >= tablePanels.Length-1)
         {
             currentPanel.SetActive(false);
             page = 0;

@@ -37,7 +37,7 @@ public class Tools : Identity
             {
                 isReady = true;
                 other.transform.SetParent(transform);
-                other.transform.position = transform.position + new Vector3(0, 0, -2);
+                other.transform.position = transform.position + new Vector3(0, 0.5f, -2);
             }
         }
 

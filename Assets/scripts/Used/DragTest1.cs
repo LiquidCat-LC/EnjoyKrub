@@ -10,8 +10,8 @@ public class DragTest1 : MonoBehaviour
     private Vector2 _startObjectPosition;
     public bool _isDragging;
 
-    [SerializeField] private PlayerInput playerInput;
-    [SerializeField] private InputAction TouchPerformedAction, TouchStartAction;
+    private PlayerInput playerInput;
+    private InputAction TouchPerformedAction, TouchStartAction;
     [SerializeField] private GameObject _draggedObject;
 
     private void Awake()

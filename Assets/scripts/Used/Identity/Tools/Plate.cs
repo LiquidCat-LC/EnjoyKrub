@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Plate : Identity
@@ -16,7 +17,7 @@ public class Plate : Identity
     public GameObject sideDishOnPlate;
     public GameObject curryOnPlate;
 
-    public virtual void OnTriggerStay2D(Collider2D other)
+    public void OnTriggerStay2D(Collider2D other)
     {
         bool drag = dragSystem.GetComponent<DragTest1>()._isDragging;
 
@@ -27,27 +28,86 @@ public class Plate : Identity
             {
                 case foodCategory.MainDish:
                     Debug.Log("Main");
-                    other.transform.SetParent(transform);
-                    other.transform.position = mainDishPos.transform.position;
-                    mainDishOnPlate = other.gameObject;
+                    if (mainDishOnPlate == null)
+                    {
+                        other.transform.SetParent(transform);
+                        other.transform.position = mainDishPos.transform.position;
+                        mainDishOnPlate = other.gameObject;
+                        other.GetComponent<Collider2D>().enabled = false;
+                    }
+                    else{
+                        Debug.Log("There is already a main dish.");
+                    }
                     break;
                 case foodCategory.SideDish:
                     Debug.Log("Side");
-                    other.transform.SetParent(transform);
-                    other.transform.position = sideDishPos.transform.position;
-                    sideDishOnPlate = other.gameObject;
+                    if (sideDishOnPlate == null)
+                    {
+                        other.transform.SetParent(transform);
+                        other.transform.position = sideDishPos.transform.position;
+                        sideDishOnPlate = other.gameObject;
+                        other.GetComponent<Collider2D>().enabled = false;
+                    }
+                    else{
+                        Debug.Log("There is already a side dish.");
+                    }
                     break;
                 case foodCategory.Curry:
                     Debug.Log("Curry");
-                    other.transform.SetParent(transform);
-                    other.transform.position = curryPos.transform.position;
-                    curryOnPlate = other.gameObject;
+                    if (curryOnPlate == null)
+                    {
+                        other.transform.SetParent(transform);
+                        other.transform.position = curryPos.transform.position;
+                        curryOnPlate = other.gameObject;
+                        other.GetComponent<Collider2D>().enabled = false;
+                    }
+                    else{
+                        Debug.Log("There is already a Curry.");
+                    }
                     break;
                 default:
-                    Debug.Log("Nope");
+                    Debug.Log("Food only");
                     break;
             }
         }
+    }
+
+    public List<GameObject> GetAllDishes()
+    {
+        List<GameObject> dishes = new List<GameObject>();
+
+        if (mainDishOnPlate != null) dishes.Add(mainDishOnPlate);
+        if (sideDishOnPlate != null) dishes.Add(sideDishOnPlate);
+        if (curryOnPlate != null) dishes.Add(curryOnPlate);
+
+        return dishes;
+    }
+
+    public bool CheckCookedStatus()
+    {
+        List<GameObject> dishes = GetAllDishes();
+        
+        if (dishes.Count == 0)
+        {
+            Debug.Log("No dishes on the plate.");
+            return false;
+        }
+
+        foreach (GameObject dish in dishes)
+        {
+            Food foodScript = dish.GetComponent<Food>();
+            if (foodScript != null)
+            {
+                if (foodScript.cookingState != CookingState.Cooked)
+                {
+                    Debug.Log($"{foodScript.name} is not cooked.");
+                    return false; 
+                }
+            }
+        }
+        
+        Debug.Log("All dishes are cooked.");
+        return true;
     }
 
 }
