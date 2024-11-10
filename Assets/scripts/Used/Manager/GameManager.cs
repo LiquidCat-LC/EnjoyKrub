@@ -9,7 +9,11 @@ using UnityEngine.UI;
 using TMPro;
 
 public class GameManager : MonoBehaviour
-{   [Header("Setting text")]
+{
+    [Header("Set Up")]
+    public CustomerManager _customerManager;
+    public GameObject OrderNote;
+    [Header("Setting text")]
     public TMP_Text mainDishOrderText;
     public TMP_Text sideDishOrderText;
     public TMP_Text curryOrderText;
@@ -21,8 +25,9 @@ public class GameManager : MonoBehaviour
     Random random = new Random();
 
     [Header("Overall")]
-    public int heart;
-    public int money;
+    public int TotalCostumer_Success;
+    public int TotalCostumer_Fail;
+    public int moneyCollect;
     public GameObject plate;
 
     public static int orD = 1;
@@ -36,11 +41,13 @@ public class GameManager : MonoBehaviour
         public GameObject curry;
     }
 
-    
+
 
     void Start()
     {
-        RandomOrder();
+        TotalCostumer_Success = 0;
+        TotalCostumer_Fail = 0;
+        //RandomOrder();
         //RemoveOrder(ordersMenu, 2);
         //CallOrder(ordersMenu,1);
     }
@@ -63,17 +70,10 @@ public class GameManager : MonoBehaviour
 
     public void CallOrder(Orders order)
     {
-        // Debug.Log("Order #" + num);
-        // Debug.Log(order[num].mainDish);
-        // Debug.Log(order[num].sideDish);
-        // Debug.Log(order[num].curry);
-
         mainDishOrderText.text = $"Main Dish: {order.mainDish.GetComponent<Food>()._itemname}";
         sideDishOrderText.text = $"Side Dish: {order.sideDish.GetComponent<Food>()._itemname}";
         curryOrderText.text = $"Curry: {order.curry.GetComponent<Food>()._itemname}";
 
-        //gameObject.SetActive(true);
-        //Debug.Log(gameObject.name);
     }
 
     public Orders[] RemoveOrder(Orders[] order, int num)
@@ -103,27 +103,34 @@ public class GameManager : MonoBehaviour
     {
         if (CheckOrder(ordersMenu[orDNum]) == true)
         {
-            return money += random.Next(30, 80); ;
+            return moneyCollect += random.Next(30, 80); ;
         }
-        return money += 0;
+        return moneyCollect += 0;
     }
     public void Serving()
     {
+        _customerManager.IsSomeoneOrder = false;
+        OrderNote.SetActive(_customerManager.IsSomeoneOrder);
         int orderIndex = 0;
         CheckOrder(ordersMenu[orderIndex]);
         if (CheckOrder(ordersMenu[orderIndex]) == true)
         {
             print("Correct");
+            TotalCostumer_Success++;
         }
         else
         {
             print("Wrong");
+            TotalCostumer_Fail++;
         }
         GetMoney(orderIndex);
-        RandomOrder();
+        ResetPlate();
+        RemoveOrder(ordersMenu, orderIndex);
+        _customerManager.RemoveCustomer();
+
     }
 
-    public void Redo()
+    public void ResetPlate()
     {
         Plate plateScript = plate.GetComponent<Plate>();
         List<GameObject> dishes = plateScript.GetAllDishes();

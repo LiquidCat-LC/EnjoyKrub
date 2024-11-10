@@ -15,7 +15,7 @@ public class Timer : MonoBehaviour
     
     void Start()
     {
-        //gameObject.SetActive(false);
+        
     }
     
     void Update()

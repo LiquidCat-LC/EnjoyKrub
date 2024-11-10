@@ -13,7 +13,7 @@ public class Customer : Identity
 {
     public Animator animator;
     public CustomerState currentState;
-    public int waitingTime = 30;
+    public int Satisfaction = 30;
     
     private void Awake()
     {
@@ -43,6 +43,11 @@ public class Customer : Identity
                 animator.SetTrigger("Angry");
                 break;
         }
+    }
+
+    public  void OnTriggerStay2D(Collider2D other)
+    {
+
     }
 
 
