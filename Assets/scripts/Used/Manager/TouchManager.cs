@@ -60,12 +60,12 @@ public class TouchManager : MonoBehaviour
         }
 
         //Function 2
-        if (rayHit.collider != null && rayHit.collider.CompareTag("panel"))
-        {
-            Debug.Log(tablePanels.Length);
-            Debug.Log("Change panel");
-            changePanel();
-        }
+        // if (rayHit.collider != null && rayHit.collider.CompareTag("panel"))
+        // {
+        //     Debug.Log(tablePanels.Length);
+        //     Debug.Log("Change panel");
+        //     changePanel();
+        // }
 
     }
 
@@ -76,7 +76,7 @@ public class TouchManager : MonoBehaviour
     }
 
     #region Change Panel
-    private void changePanel()
+    public void changePanel()
     {
         Debug.Log("Page:" + page);
         StartCoroutine(DeactivateAndSwitchPanel(tablePanels[page]));

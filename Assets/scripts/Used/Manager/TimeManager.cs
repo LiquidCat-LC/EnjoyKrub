@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class TimeManager : MonoBehaviour
 {
@@ -9,6 +10,9 @@ public class TimeManager : MonoBehaviour
     private float dayTimer;
     public TMP_Text timeText;
     private Coroutine dayCoroutine;
+
+    [Header("Set up UI")]
+    [SerializeField] Image DayBar;
 
     void Start()
     {
@@ -43,6 +47,7 @@ public class TimeManager : MonoBehaviour
         while (dayTimer > 0)
         {
             dayTimer -= Time.deltaTime;
+            DayBar.fillAmount = dayTimer / dayDuration;
             UpdateTimeUI(dayTimer);
             yield return null;
         }
