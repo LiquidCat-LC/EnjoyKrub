@@ -109,6 +109,7 @@ public class GameManager : MonoBehaviour
     }
     public void Serving()
     {
+        _customerManager.isWaiting = false;
         _customerManager.IsSomeoneOrder = false;
         OrderNote.SetActive(_customerManager.IsSomeoneOrder);
         int orderIndex = 0;

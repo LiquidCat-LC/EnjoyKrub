@@ -7,14 +7,16 @@ public enum CustomerState
     Idle,
     Order,
     Happy,
-    Angry
+    Angry,
 }
+
 public class Customer : Identity
 {
     public Animator animator;
     public CustomerState currentState;
-    public int Satisfaction = 30;
-    
+    public int patienceDuration = 30;
+    public bool ordering;
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -24,6 +26,7 @@ public class Customer : Identity
     {
         SetCustomerState(CustomerState.Idle);
     }
+
     public void SetCustomerState(CustomerState newState)
     {
         currentState = newState;
@@ -44,11 +47,4 @@ public class Customer : Identity
                 break;
         }
     }
-
-    public  void OnTriggerStay2D(Collider2D other)
-    {
-
-    }
-
-
 }
