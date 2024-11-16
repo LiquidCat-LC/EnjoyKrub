@@ -116,11 +116,13 @@ public class GameManager : MonoBehaviour
         CheckOrder(ordersMenu[orderIndex]);
         if (CheckOrder(ordersMenu[orderIndex]) == true)
         {
+            _customerManager.customerQueue[0].GetComponent<Customer>().SetCustomerState(CustomerState.Happy);
             print("Correct");
             TotalCostumer_Success++;
         }
         else
         {
+            _customerManager.customerQueue[0].GetComponent<Customer>().SetCustomerState(CustomerState.Angry);
             print("Wrong");
             TotalCostumer_Fail++;
         }

@@ -47,3 +47,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: BG
+    uniqueID: 1900844071
+    locked: 0
+  - name: Customer
+    uniqueID: 3369596377
+    locked: 0
+  - name: CookingArea
+    uniqueID: 3205365841
+    locked: 0
+  - name: Food
+    uniqueID: 3272531993
+    locked: 0

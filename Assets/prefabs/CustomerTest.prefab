@@ -102,7 +102,7 @@ MonoBehaviour:
   _objectType: 0
   animator: {fileID: 5989255483339704682}
   currentState: 0
-  patienceDuration: 30
+  patienceDuration: 5
   ordering: 0
 --- !u!95 &5989255483339704682
 Animator:

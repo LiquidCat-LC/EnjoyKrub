@@ -73,8 +73,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1022435303
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: -885945718, guid: fbd62fddb790609418b4de4ffe1de670, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -173,6 +173,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _itemname: Egg
   _objectType: 1
+  _foodCategory: 0
   stateSprites:
   - {fileID: 705214689, guid: fbd62fddb790609418b4de4ffe1de670, type: 3}
   - {fileID: 803731538, guid: fbd62fddb790609418b4de4ffe1de670, type: 3}

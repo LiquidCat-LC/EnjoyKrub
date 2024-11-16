@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 
 public enum CustomerState
@@ -12,15 +13,14 @@ public enum CustomerState
 
 public class Customer : Identity
 {
-    public Animator animator;
     public CustomerState currentState;
     public int patienceDuration = 30;
-    public bool ordering;
 
-    private void Awake()
-    {
-        animator = GetComponent<Animator>();
-    }
+    [Header("State GameObjects")]
+    public GameObject Idle;
+    public GameObject Order;
+    public GameObject Angry;
+    public GameObject Happy;
 
     private void Start()
     {
@@ -30,21 +30,45 @@ public class Customer : Identity
     public void SetCustomerState(CustomerState newState)
     {
         currentState = newState;
+        DisableAllObjects();
 
         switch (newState)
         {
             case CustomerState.Idle:
-                animator.SetTrigger("Idle");
+                Idle.SetActive(true);
                 break;
             case CustomerState.Order:
-                animator.SetTrigger("Order");
+                Order.SetActive(true);
                 break;
             case CustomerState.Happy:
-                animator.SetTrigger("Happy");
+                Happy.SetActive(true);
                 break;
             case CustomerState.Angry:
-                animator.SetTrigger("Angry");
+                Angry.SetActive(true);
                 break;
         }
+    }
+
+    public void _Idle()
+    {
+        SetCustomerState(CustomerState.Idle);
+    }
+    public void _Angry()
+    {
+        SetCustomerState(CustomerState.Angry);
+    }public void _Order()
+    {
+        SetCustomerState(CustomerState.Order);
+    }public void _Happy()
+    {
+        SetCustomerState(CustomerState.Happy);
+    }
+
+    private void DisableAllObjects()
+    {
+        Idle.SetActive(false);
+        Order.SetActive(false);
+        Angry.SetActive(false);
+        Happy.SetActive(false);
     }
 }
