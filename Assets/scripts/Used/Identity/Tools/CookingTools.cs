@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-
 public class CookingTools : Tools
 {
     public bool isCooking = false;
-    private Coroutine cookingCoroutine;
     public List<GameObject> allowedFoodPrefabs;
-
+    public List<Sprite> stateCookingSprites;
+    private Coroutine cookingCoroutine;
     void Awake()
     {
         isCooking = false;
@@ -23,20 +22,22 @@ public class CookingTools : Tools
 
         if (transform.childCount == 1 && other.CompareTag("Food"))
         {
-    
             SideDish SideDishScript = GetComponentInChildren<SideDish>();
 
             foreach (GameObject food in allowedFoodPrefabs)
             {
                 Food foodd = food.GetComponent<Food>();
-                if (SideDishScript != null && !isCooking && foodd._itemname == SideDishScript._itemname )
+                if (
+                    SideDishScript != null
+                    && !isCooking
+                    && foodd._itemname == SideDishScript._itemname
+                )
                 {
                     isReady = true;
                     cookingCoroutine = StartCoroutine(Cooking(SideDishScript));
                 }
             }
         }
-
     }
 
     public override void OnTriggerExit2D(Collider2D other)
@@ -48,7 +49,6 @@ public class CookingTools : Tools
             Debug.Log("Cooking stopped.");
             isCooking = false;
         }
-
     }
 
     #endregion
@@ -61,13 +61,14 @@ public class CookingTools : Tools
             sideDish.cookingState = CookingState.Raw;
             sideDish.SetCookingStatus(CookingState.Raw);
         }
+
         //Debug.Log(sideDish);
         if (sideDish != null)
         {
             isCooking = true;
+            
             while (sideDish.cookingTime > -sideDish.maxCookingTime)
             {
-
                 sideDish.cookingTime -= Time.deltaTime;
 
                 if (sideDish.cookingTime <= 0 && sideDish.cookingState != CookingState.Cooked)
@@ -77,7 +78,10 @@ public class CookingTools : Tools
                     sideDish.SetCookingStatus(CookingState.Cooked);
                 }
 
-                if (sideDish.cookingTime <= -sideDish.maxCookingTime && sideDish.cookingState != CookingState.Overcooked)
+                if (
+                    sideDish.cookingTime <= -sideDish.maxCookingTime
+                    && sideDish.cookingState != CookingState.Overcooked
+                )
                 {
                     Debug.Log("Food is overcooked!");
                     sideDish.cookingState = CookingState.Overcooked;
@@ -95,6 +99,4 @@ public class CookingTools : Tools
             Debug.LogError("The provided food is not a SideDish!");
         }
     }
-
-
 }

@@ -17,12 +17,11 @@ public class CustomerManager : MonoBehaviour
     public float customerMoveSpeed;
     public float customerSpawnSpeed;
     public List<Transform> queuePositions;
-    [Header("Customer ")]
+    [Header("Customer action")]
     public bool IsSomeoneOrder;
     public bool IsSomeoneLeaving;
     public bool isWaiting = false;
     public bool hadPetting = false;
-    
     public List<GameObject> customerQueue;
     private float remainingTime;
     private float holdingTime;

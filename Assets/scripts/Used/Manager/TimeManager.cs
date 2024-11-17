@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class TimeManager : MonoBehaviour
 {
@@ -51,7 +52,8 @@ public class TimeManager : MonoBehaviour
             UpdateTimeUI(dayTimer);
             yield return null;
         }
-
+        
+        SceneManager.LoadScene("Endday");
         Debug.Log("The day has ended.");
 
     }

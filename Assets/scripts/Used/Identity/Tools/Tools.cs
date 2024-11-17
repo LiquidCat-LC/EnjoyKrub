@@ -12,14 +12,11 @@ public class Tools : Identity
 {
     //เก็บไว้
     protected toolCategory _toolCategory;
-
-    //โดนยืมแน่
     public GameObject dragSystem;
-    public bool isReady = false;
     public GameObject table;
     public bool readyToSwitch;
-
-
+    [Header("State")]
+    public bool isReady = false;
     void Awake()
     {
         isReady = false;
