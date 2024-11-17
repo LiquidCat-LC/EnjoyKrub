@@ -11,6 +11,7 @@ public class TimeManager : MonoBehaviour
     private float dayTimer;
     public TMP_Text timeText;
     private Coroutine dayCoroutine;
+    public SceneManager sceneManager;
 
     [Header("Set up UI")]
     [SerializeField] Image DayBar;
@@ -52,8 +53,8 @@ public class TimeManager : MonoBehaviour
             UpdateTimeUI(dayTimer);
             yield return null;
         }
-        
-        SceneManager.LoadScene("Endday");
+
+        SceneManager.LoadScene(1);
         Debug.Log("The day has ended.");
 
     }
