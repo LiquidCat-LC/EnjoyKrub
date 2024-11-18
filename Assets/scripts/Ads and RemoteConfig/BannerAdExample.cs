@@ -116,6 +116,5 @@ public class BannerAdExample : MonoBehaviour
         //_loadBannerButton.onClick.RemoveAllListeners();
         //_showBannerButton.onClick.RemoveAllListeners();
         _hideBannerButton.onClick.RemoveAllListeners();
-        HideBannerAd();
     }
 }

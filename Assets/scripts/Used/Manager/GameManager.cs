@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
 {
     [Header("Set Up")]
     public CustomerManager _customerManager;
+    public PlayerManager _player;
+    public GameObject plate;
     public GameObject OrderNote;
     [Header("Setting text")]
     public TMP_Text mainDishOrderText;
@@ -23,12 +25,6 @@ public class GameManager : MonoBehaviour
     public GameObject[] sideDishes;
     public GameObject[] curries;
     Random random = new Random();
-
-    [Header("Overall")]
-    public int TotalCostumer_Success;
-    public int TotalCostumer_Fail;
-    public int moneyCollect;
-    public GameObject plate;
 
     public static int orD = 1;
     public Orders[] ordersMenu = new Orders[orD];
@@ -45,8 +41,8 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        TotalCostumer_Success = 0;
-        TotalCostumer_Fail = 0;
+        _player.TotalCostumer_Success = 0;
+        _player.TotalCostumer_Fail = 0;
         //RandomOrder();
         //RemoveOrder(ordersMenu, 2);
         //CallOrder(ordersMenu,1);
@@ -103,9 +99,9 @@ public class GameManager : MonoBehaviour
     {
         if (CheckOrder(ordersMenu[orDNum]) == true)
         {
-            return moneyCollect += random.Next(30, 80); ;
+            return _player.moneyCollect += random.Next(30, 80); ;
         }
-        return moneyCollect += 0;
+        return _player.moneyCollect += 0;
     }
     public void Serving()
     {
@@ -118,13 +114,13 @@ public class GameManager : MonoBehaviour
         {
             _customerManager.customerQueue[0].GetComponent<Customer>().SetCustomerState(CustomerState.Happy);
             print("Correct");
-            TotalCostumer_Success++;
+            _player.TotalCostumer_Success++;
         }
         else
         {
             _customerManager.customerQueue[0].GetComponent<Customer>().SetCustomerState(CustomerState.Angry);
             print("Wrong");
-            TotalCostumer_Fail++;
+            _player.TotalCostumer_Fail++;
         }
         GetMoney(orderIndex);
         ResetPlate();

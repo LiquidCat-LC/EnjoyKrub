@@ -1,22 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using TMPro;
 
 public class SceneRunning : MonoBehaviour
 {
+    public PlayerManager _player;
+
     [Header("Loading UI")]
     public GameObject loadingPanel;
     public Image loadingProgressBar;
     public TMP_Text loadingProgressText;
 
-    public void LoadGamePlaye()
+    //กดเริ่มเกมหลังLoad save
+    public void StartGame()
     {
         LoadSceneWithLoading("Demo");
     }
-
     public void LoadSceneWithLoading(string sceneName)
     {
         loadingPanel.SetActive(true);

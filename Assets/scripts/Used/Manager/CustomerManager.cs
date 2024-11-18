@@ -1,22 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = System.Random;
 
 public class CustomerManager : MonoBehaviour
 {
-    Random random = new Random();   
+    Random random = new Random();
+
     [Header("Set Up")]
+    public PlayerManager _playerManager;
     public GameManager _orderManager;
     public GameObject quickPet;
     public GameObject pettingBar;
 
     [Header("Setting customer")]
+    public TMP_Text totalCustomerText;
     public bool isPause = false;
     public GameObject[] customerPrefab;
     public float customerMoveSpeed;
     public float customerSpawnSpeed;
     public List<Transform> queuePositions;
+
     [Header("Customer action")]
     public bool IsSomeoneOrder;
     public bool IsSomeoneLeaving;
@@ -26,22 +32,31 @@ public class CustomerManager : MonoBehaviour
     private float remainingTime;
     private float holdingTime;
 
+    
     public void Start()
     {
-        StartCoroutine(SpawnCustomerRoutine());
+        _playerManager = FindObjectOfType<PlayerManager>();
+        StartCoroutine(SpawnCustomerRoutine(_playerManager.customers));
         random = new System.Random();
     }
 
-    IEnumerator SpawnCustomerRoutine()
+    IEnumerator SpawnCustomerRoutine(int _customers)
     {
-        while (true)
+        while (customerQueue.Count < _customers) // Spawn ตามจำนวน customers
         {
             if (customerQueue.Count < queuePositions.Count - 2)
             {
                 SpawnCustomer();
+                UpdateCustomerText(_customers);
             }
             yield return new WaitForSeconds(customerSpawnSpeed);
         }
+        Debug.Log("All customers spawned for this level.");
+    }
+
+    private void UpdateCustomerText(int _customers)
+    {
+        totalCustomerText.text = $"Customers: {customerQueue.Count}/{_customers}";
     }
 
     private void SpawnCustomer()
@@ -111,7 +126,7 @@ public class CustomerManager : MonoBehaviour
         }
         Destroy(customer);
         IsSomeoneLeaving = false;
-        
+
         MoveCustomersInQueue();
     }
 
@@ -133,7 +148,7 @@ public class CustomerManager : MonoBehaviour
                 yield break;
             }
 
-            if(isPause)
+            if (isPause)
             {
                 yield return null;
             }
@@ -141,8 +156,6 @@ public class CustomerManager : MonoBehaviour
             {
                 remainingTime -= Time.deltaTime;
             }
-
-            
 
             if (remainingTime < holdingTime && !hadScreaming)
             {
@@ -172,7 +185,7 @@ public class CustomerManager : MonoBehaviour
         float remainingPetTime = 5f;
         while (remainingPetTime > 0 && !hadPetting)
         {
-            if(IsSomeoneLeaving)
+            if (IsSomeoneLeaving)
             {
                 quickPet.SetActive(false);
                 yield break;
