@@ -6,8 +6,9 @@ public enum toolCategory
 {
     IngredientTool,
     CookingTool,
-    RepeatCookTool
+    RepeatCookTool,
 }
+
 public class Tools : Identity
 {
     //เก็บไว้
@@ -15,14 +16,15 @@ public class Tools : Identity
     public GameObject dragSystem;
     public GameObject table;
     public bool readyToSwitch;
+
     [Header("State")]
     public bool isReady = false;
+
     void Awake()
     {
         isReady = false;
         _objectType = objectType.CookingTool;
     }
-
 
     #region Detect Food
     public virtual void OnTriggerStay2D(Collider2D other)
@@ -37,7 +39,6 @@ public class Tools : Identity
                 other.transform.position = transform.position + new Vector3(0, 0.5f, -2);
             }
         }
-
     }
 
     public virtual void OnTriggerExit2D(Collider2D other)
@@ -58,6 +59,5 @@ public class Tools : Identity
         other.GetComponent<Food>().isNewlyCreated = false;
     }
     #endregion
-
 
 }

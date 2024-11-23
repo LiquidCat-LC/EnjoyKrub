@@ -8,13 +8,13 @@ using UnityEngine.SceneManagement;
 public class TimeManager : MonoBehaviour
 {
     public float dayDuration = 180f;
-    private float dayTimer;
+    private float elapsedTimer = 0f; 
     public TMP_Text timeText;
     private Coroutine dayCoroutine;
-    public SceneManager sceneManager;
+    public SceneRunning _Loading;
 
     [Header("Set up UI")]
-    [SerializeField] Image DayBar;
+    public Slider daySlider;
 
     void Start()
     {
@@ -23,7 +23,17 @@ public class TimeManager : MonoBehaviour
 
     public void StartDay()
     {
-        dayTimer = dayDuration;
+        elapsedTimer = 0f;
+
+        if (daySlider != null)
+        {
+            
+            daySlider.minValue = 0;
+            daySlider.maxValue = dayDuration;
+            daySlider.value = 0;
+        }
+
+
         dayCoroutine = StartCoroutine(DayCountdown());
     }
 
@@ -46,24 +56,42 @@ public class TimeManager : MonoBehaviour
 
     IEnumerator DayCountdown()
     {
-        while (dayTimer > 0)
+        while (elapsedTimer < dayDuration)
         {
-            dayTimer -= Time.deltaTime;
-            DayBar.fillAmount = dayTimer / dayDuration;
-            UpdateTimeUI(dayTimer);
+            elapsedTimer += Time.deltaTime;
+            elapsedTimer = Mathf.Clamp(elapsedTimer, 0, dayDuration); 
+
+            if (daySlider != null)
+            {
+                daySlider.value = elapsedTimer;
+            }
+
+            UpdateTimeUI(dayDuration - elapsedTimer);
+
             yield return null;
         }
 
-        SceneManager.LoadScene(1);
-        Debug.Log("The day has ended.");
-
+        OnDayEnd();
     }
 
     void UpdateTimeUI(float time)
     {
         int minutes = Mathf.FloorToInt(time / 60);
         int seconds = Mathf.FloorToInt(time % 60);
-        timeText.text = $"Time Left: {minutes:00}:{seconds:00}";
+        if (timeText != null)
+        {
+            timeText.text = $"Time Left: {minutes:00}:{seconds:00}";
+        }
+    }
+
+    void OnDayEnd()
+    {
+        if (_Loading != null)
+        {
+            _Loading.LoadSceneWithLoading("Demo");
+        }
+
+        Debug.Log("The day has ended.");
     }
 
 }

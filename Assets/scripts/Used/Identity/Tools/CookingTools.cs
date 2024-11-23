@@ -9,6 +9,7 @@ public class CookingTools : Tools
     public List<GameObject> allowedFoodPrefabs;
     public List<Sprite> stateCookingSprites;
     private Coroutine cookingCoroutine;
+
     void Awake()
     {
         isCooking = false;
@@ -66,7 +67,7 @@ public class CookingTools : Tools
         if (sideDish != null)
         {
             isCooking = true;
-            
+
             while (sideDish.cookingTime > -sideDish.maxCookingTime)
             {
                 sideDish.cookingTime -= Time.deltaTime;

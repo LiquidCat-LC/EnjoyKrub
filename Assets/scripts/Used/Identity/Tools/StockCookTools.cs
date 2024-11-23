@@ -40,7 +40,7 @@ public class StockCookTool : Tools
     {
         print($"Stock: {stock}, OFS: {isOutOfStock}, IsNewly: {other.GetComponent<Food>().isNewlyCreated}");
 
-        if (stock > 0 && isOutOfStock == false && other.GetComponent<Food>().isNewlyCreated == true)
+        if (stock > 0 && isOutOfStock == false && other.GetComponent<Food>().isNewlyCreated == true && !readyToSwitch)
         {
             takeItem();
         }
@@ -59,6 +59,7 @@ public class StockCookTool : Tools
     private IEnumerator Cooking(MainDish mainDish)
     {
         MainDish MainDishScript = GetComponentInChildren<MainDish>();
+        stockPrefab = mainDish.gameObject;
 
         if (mainDish != null)
         {
@@ -81,7 +82,8 @@ public class StockCookTool : Tools
                     yield return null;
                 }
                 mainDish.cookingState = CookingState.Cooked;
-                MainDishScript.GetComponent<SpriteRenderer>().color = Color.green;
+                mainDish.SetCookingStatus(CookingState.Cooked);
+                //MainDishScript.GetComponent<SpriteRenderer>().color = Color.green;
                 //mainDish.SetCookingStatus(CookingState.Cooked);
                 mainDish.isNewlyCreated = true;
                 stock = mainDish.stock;
@@ -102,8 +104,11 @@ public class StockCookTool : Tools
             if (stock > 0)
             {
                 GameObject newObject = Instantiate(stockPrefab, transform.position + spawnStockPos, Quaternion.identity);
+                newObject.transform.localScale = new Vector3(0.4f,0.4f,0.4f);
                 newObject.transform.SetParent(transform);
                 newObject.GetComponent<Food>().isNewlyCreated = true;
+                newObject.GetComponent<Food>().cookingState = CookingState.Cooked;
+                newObject.GetComponent<Food>().SetCookingStatus(CookingState.Cooked);
             }
             isOutOfStock = (stock == 0);
             return true;
@@ -112,6 +117,7 @@ public class StockCookTool : Tools
         {
             Debug.Log("No more items left in stock.");
             isOutOfStock = true;
+            stockPrefab = null;
             return false;
         }
     }

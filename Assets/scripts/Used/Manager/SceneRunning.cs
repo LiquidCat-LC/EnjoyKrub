@@ -7,7 +7,6 @@ using UnityEngine.UI;
 
 public class SceneRunning : MonoBehaviour
 {
-    public PlayerManager _player;
 
     [Header("Loading UI")]
     public GameObject loadingPanel;

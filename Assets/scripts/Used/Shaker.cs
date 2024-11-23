@@ -23,13 +23,13 @@ public class Shaker : MonoBehaviour
 
     private void OnEnable()
     {
-        if (barImage != null)
-        {
-            fillAmount = 0f;
-            _customerManager.isPause = true;
+        // if (barImage != null)
+        // {
+        //     fillAmount = 0f;
+        //     _customerManager.isPause = true;
 
-            Debug.Log("Fill reset to 0.");
-        }
+        //     Debug.Log("Fill reset to 0.");
+        // }
     }
 
     public void PettingCustomer()
@@ -49,21 +49,31 @@ public class Shaker : MonoBehaviour
             isShaking = false; // หยุดเขย่า
         }
 
-        if(fillAmount == 1f)
-        {
-            _customerManager.hadPetting = true;
-            _customerManager.isPause = false;
-            this.gameObject.SetActive(false);
-        }
+        // if(fillAmount > 1f)
+        // {
+        //     Debug.Log("fin1");
+        //     _customerManager.hadPetting = true;
+        //     _customerManager.isPause = false;
+        //     this.gameObject.SetActive(false);
+        // }
     }
 
     private IEnumerator Shake()
     {
         while (fillAmount < 1f && isShaking)
         {
-            fillAmount += Time.deltaTime * 1f; // ปรับความเร็วในการเติม
+            Debug.Log("Shake");
+            fillAmount += Time.deltaTime * 2f; // ปรับความเร็วในการเติม
             barImage.fillAmount = fillAmount; // เติม bar
             yield return null;
+        }
+
+        if(fillAmount > 1f)
+        {
+            Debug.Log("fin");
+            _customerManager.hadPetting = true;
+            _customerManager.isPause = false;
+            this.gameObject.SetActive(false);
         }
     }
 }

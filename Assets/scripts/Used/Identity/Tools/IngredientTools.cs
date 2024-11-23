@@ -7,6 +7,7 @@ public class IngredientTools : Tools
 {
     public GameObject ingredPrefab;
     public Vector3 spawnIngredPos = new Vector3(0,0,-2);
+    public Vector3 ingredSize;
 
     void Start()
     {
@@ -47,6 +48,7 @@ public class IngredientTools : Tools
         if (transform.childCount == 0)
         {
             GameObject newObject = Instantiate(ingredPrefab, transform.position + spawnIngredPos , Quaternion.identity);
+            //newObject.transform.localScale = ingredSize;
             newObject.transform.SetParent(transform);
             newObject.GetComponent<Food>().isNewlyCreated=true;
             Debug.Log("New prefab created.");

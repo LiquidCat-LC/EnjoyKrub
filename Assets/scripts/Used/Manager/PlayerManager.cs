@@ -11,9 +11,9 @@ public class PlayerManager : MonoBehaviour
     public const string url =
         "https://enjoykrub-ae32e-default-rtdb.asia-southeast1.firebasedatabase.app";
     public const string secret = "HDRqy4XcxgYRVXYJsKpV6y4efQhyqa4vocBp2mDl";
-    public User user;
     public static string _userId;
     public string userCurrent;
+    public List<User> userNowList = new List<User>();
 
     [Header("Overall")]
     public int TotalCostumer_Success;
@@ -35,29 +35,57 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    void Start()
+    #region Test
+    public void inputID(string userID)
     {
-        // // ตัวอย่างการใช้งาน: เช็คผลและอัปเดตข้อมูล
-        // _userId = "user123"; // User ID ของผู้เล่น
-        // user = new User("Player123", 1, 0); // สร้างข้อมูลเริ่มต้นสำหรับผู้เล่น
-        // checkResult(_userId, user);
+        string userUrl = $"{url}/users/{userID}.json?auth={secret}";
+
+        User newUser = new User(userID, 1, 100); // ใช้ userID ใน User object ด้วย
+
+        RestClient
+            .Put(userUrl, newUser)
+            .Then(response =>
+            {
+                Debug.Log($"User data for {userID} saved successfully.");
+            })
+            .Catch(error =>
+            {
+                Debug.LogError($"Failed to save user data: {error.Message}");
+            });
     }
 
-    public void checkResult(string userId, User userData)
+    public void updateUser(string userId)
     {
-        if (TotalCostumer_Success > TotalCostumer_Fail)
-        {
-            user.levelDay++;
-            user.money = moneyCollect;
+        string userUrl = $"{url}/users/{userId}.json?auth={secret}";
 
+        User updatedUser = new User(userId, level, moneyCollect);
+
+        RestClient
+            .Put(userUrl, updatedUser)
+            .Then(response =>
+            {
+                Debug.Log($"User data for {userId} updated successfully!");
+            })
+            .Catch(error =>
+            {
+                Debug.LogError($"Failed to update user data: {error.Message}");
+            });
+    }
+    #endregion
+    public void checkResult(string userId)
+    {
+        if (TotalCostumer_Fail <= allowedMistakes)
+        {
+            level++; // เพิ่มเลเวล
             string userUrl = $"{url}/users/{userId}.json?auth={secret}";
 
-            // อัปเดตข้อมูลผู้ใช้ใน Firebase
+            User updatedUser = new User(userId, level, moneyCollect);
+
             RestClient
-                .Put<User>(userUrl, user)
+                .Put(userUrl, updatedUser)
                 .Then(response =>
                 {
-                    Debug.Log("User data updated successfully!");
+                    Debug.Log($"User data updated successfully! New Level: {level}");
                 })
                 .Catch(error =>
                 {
@@ -82,17 +110,13 @@ public class PlayerManager : MonoBehaviour
     [Header("Difficulty : current")]
     public int customers;
     int allowedMistakes;
-    float customerSpeed;
 
     public void CalculateDifficulty(int level)
     {
         customers = baseCustomers + Mathf.FloorToInt(level * 1.2f);
-        allowedMistakes = Mathf.Max(baseMistakes - Mathf.FloorToInt(level * 0.5f), 1);
-        customerSpeed = 2.0f + (level * speedGrowthRate);
+        allowedMistakes = Mathf.Max(baseMistakes + Mathf.FloorToInt(customers * 0.2f), 3);
 
-        Debug.Log(
-            $"Level {level}: Customers = {customers}, Allowed Mistakes = {allowedMistakes}, Speed = {customerSpeed}"
-        );
+        Debug.Log($"Level {level}: Customers = {customers}, Allowed Mistakes = {allowedMistakes}");
 
         isDifficultyCalculated = true;
     }

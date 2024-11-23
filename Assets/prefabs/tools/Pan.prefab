@@ -98,14 +98,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 832b0ac06c8fd6a468370441ca3e9232, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _itemname: 
+  _itemname: Pan
   _objectType: 2
   dragSystem: {fileID: 0}
-  isReady: 0
   table: {fileID: 0}
   readyToSwitch: 0
+  isReady: 0
   isCooking: 0
   allowedFoodPrefabs: []
+  stateCookingSprites: []
 --- !u!58 &5942851779347065300
 CircleCollider2D:
   m_ObjectHideFlags: 0

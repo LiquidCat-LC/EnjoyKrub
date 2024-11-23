@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Random = System.Random;
 
@@ -12,8 +13,12 @@ public class CustomerManager : MonoBehaviour
     [Header("Set Up")]
     public PlayerManager _playerManager;
     public GameManager _orderManager;
+    public SceneRunning _Loading;
     public GameObject quickPet;
     public GameObject pettingBar;
+    public Slider SatisfySlider;
+    public Image handleImage;
+    public List<Sprite> stateSatisfySprites;
 
     [Header("Setting customer")]
     public TMP_Text totalCustomerText;
@@ -24,6 +29,8 @@ public class CustomerManager : MonoBehaviour
     public List<Transform> queuePositions;
 
     [Header("Customer action")]
+    public bool IsAllCustomerspawn;
+    public int customerOfToday;
     public bool IsSomeoneOrder;
     public bool IsSomeoneLeaving;
     public bool isWaiting = false;
@@ -32,17 +39,18 @@ public class CustomerManager : MonoBehaviour
     private float remainingTime;
     private float holdingTime;
 
-    
     public void Start()
     {
         _playerManager = FindObjectOfType<PlayerManager>();
+        customerOfToday = 0;
+        IsAllCustomerspawn = false;
         StartCoroutine(SpawnCustomerRoutine(_playerManager.customers));
         random = new System.Random();
     }
 
     IEnumerator SpawnCustomerRoutine(int _customers)
     {
-        while (customerQueue.Count < _customers) // Spawn ตามจำนวน customers
+        while (customerOfToday < _customers) // Spawn ตามจำนวน customers
         {
             if (customerQueue.Count < queuePositions.Count - 2)
             {
@@ -56,7 +64,11 @@ public class CustomerManager : MonoBehaviour
 
     private void UpdateCustomerText(int _customers)
     {
-        totalCustomerText.text = $"Customers: {customerQueue.Count}/{_customers}";
+        totalCustomerText.text = $"Customers: {customerOfToday}/{_customers}";
+        if (customerOfToday == _customers)
+        {
+            IsAllCustomerspawn = true;
+        }
     }
 
     private void SpawnCustomer()
@@ -68,6 +80,7 @@ public class CustomerManager : MonoBehaviour
             Quaternion.identity
         );
         customerQueue.Add(newCustomer);
+        customerOfToday++;
         MoveCustomersInQueue();
     }
 
@@ -127,7 +140,15 @@ public class CustomerManager : MonoBehaviour
         Destroy(customer);
         IsSomeoneLeaving = false;
 
-        MoveCustomersInQueue();
+        if (IsAllCustomerspawn && customerQueue.Count == 0)
+        {
+            Debug.Log("All customers have been served. Loading next scene...");
+            _Loading.LoadSceneWithLoading("Endday");
+        }
+        else
+        {
+            MoveCustomersInQueue();
+        }
     }
 
     IEnumerator StartSatisfactionCountdown(GameObject customer)
@@ -139,12 +160,14 @@ public class CustomerManager : MonoBehaviour
         hadPetting = false;
         bool hadScreaming = false;
         bool hadExtendedTime = false;
+        SatisfySlider.gameObject.SetActive(true);
 
         while (remainingTime > 0)
         {
             if (!isWaiting)
             {
                 Debug.Log("Customer : Coroutine cancelled!");
+
                 yield break;
             }
 
@@ -155,6 +178,22 @@ public class CustomerManager : MonoBehaviour
             else
             {
                 remainingTime -= Time.deltaTime;
+
+                float progress = 1 - (remainingTime / thisCustomer.patienceDuration);
+                SatisfySlider.value = progress;
+
+                if (progress < 0.3f)
+                {
+                    handleImage.sprite = stateSatisfySprites[0];
+                }
+                else if (progress < 0.6f)
+                {
+                    handleImage.sprite = stateSatisfySprites[1];
+                }
+                else
+                {
+                    handleImage.sprite = stateSatisfySprites[2];
+                }
             }
 
             if (remainingTime < holdingTime && !hadScreaming)
