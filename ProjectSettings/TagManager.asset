@@ -14,7 +14,7 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - UIWorldSpace
   - Water
   - UI
   - CanDrag
@@ -58,4 +58,7 @@ TagManager:
     locked: 0
   - name: Food
     uniqueID: 3272531993
+    locked: 0
+  - name: FakeUI
+    uniqueID: 869220769
     locked: 0

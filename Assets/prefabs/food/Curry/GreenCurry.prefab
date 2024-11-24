@@ -164,6 +164,7 @@ MonoBehaviour:
   _itemname: GreenCurry
   _objectType: 1
   _foodCategory: 2
-  stateSprites: []
+  stateSprites:
+  - {fileID: 318314444, guid: e215c0603e5fd2a449e2bdc92e6fc3f2, type: 3}
   cookingState: 2
   isNewlyCreated: 1

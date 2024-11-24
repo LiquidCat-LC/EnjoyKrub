@@ -9,8 +9,12 @@ public class MainDish : Food
     void Start()
     {
         _foodCategory = foodCategory.MainDish;
-        cookingState = CookingState.Ingred; 
+        if (cookingTime > 0)
+        {
+            cookingState = CookingState.Ingred;
+        }
     }
 
-    
+
+
 }

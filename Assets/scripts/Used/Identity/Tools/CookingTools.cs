@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CookingTools : Tools
 {
     public bool isCooking = false;
     public List<GameObject> allowedFoodPrefabs;
-    public List<Sprite> stateCookingSprites;
     private Coroutine cookingCoroutine;
 
     void Awake()
@@ -36,6 +36,8 @@ public class CookingTools : Tools
                 {
                     isReady = true;
                     cookingCoroutine = StartCoroutine(Cooking(SideDishScript));
+                    cookingCircle.gameObject.SetActive(true);
+
                 }
             }
         }
@@ -47,6 +49,7 @@ public class CookingTools : Tools
         if (cookingCoroutine != null)
         {
             StopCoroutine(cookingCoroutine);
+            cookingCircle.gameObject.SetActive(false);
             Debug.Log("Cooking stopped.");
             isCooking = false;
         }
@@ -54,6 +57,11 @@ public class CookingTools : Tools
 
     #endregion
 
+    [Header("Cooking UI")]
+    public Image cookingCircle; // Image วงกลมสำหรับแสดงสถานะ
+    public Color cookingColor = Color.green; // สีขณะกำลังทำอาหาร (Raw)
+    public Color cookedColor = Color.yellow; // สีหลังจากสุก (Cooked)
+    public Color burntColor = Color.red; // สีหลังจากไหม้ (Overcooked)
 
     private IEnumerator Cooking(SideDish sideDish)
     {
@@ -63,23 +71,33 @@ public class CookingTools : Tools
             sideDish.SetCookingStatus(CookingState.Raw);
         }
 
-        //Debug.Log(sideDish);
         if (sideDish != null)
         {
             isCooking = true;
+
+            // เชื่อมโยงกับ UI
+            float totalCookingTime = sideDish.maxCookingTime * 2; // รวมเวลาทั้งหมด (เวลาสุก + ไหม้)
+            float cookingStartTime = sideDish.cookingTime + sideDish.maxCookingTime; // เวลาเริ่มต้น
 
             while (sideDish.cookingTime > -sideDish.maxCookingTime)
             {
                 sideDish.cookingTime -= Time.deltaTime;
 
+                // คำนวณ progress
+                float progress = 1 - (sideDish.cookingTime + sideDish.maxCookingTime) / totalCookingTime;
+
+                // อัปเดต UI วงกลม
+                cookingCircle.fillAmount = progress;
+
+                // เปลี่ยนสีตามสถานะ
                 if (sideDish.cookingTime <= 0 && sideDish.cookingState != CookingState.Cooked)
                 {
                     Debug.Log("Food is now cooked!");
                     sideDish.cookingState = CookingState.Cooked;
                     sideDish.SetCookingStatus(CookingState.Cooked);
+                    cookingCircle.color = cookedColor; // เปลี่ยนสีเป็นสีของ Cooked
                 }
-
-                if (
+                else if (
                     sideDish.cookingTime <= -sideDish.maxCookingTime
                     && sideDish.cookingState != CookingState.Overcooked
                 )
@@ -87,7 +105,12 @@ public class CookingTools : Tools
                     Debug.Log("Food is overcooked!");
                     sideDish.cookingState = CookingState.Overcooked;
                     sideDish.SetCookingStatus(CookingState.Overcooked);
+                    cookingCircle.color = burntColor; // เปลี่ยนสีเป็นสีของ Overcooked
                     break;
+                }
+                else if (sideDish.cookingState == CookingState.Raw)
+                {
+                    cookingCircle.color = cookingColor; // สีขณะกำลังทำอาหาร
                 }
 
                 yield return null;

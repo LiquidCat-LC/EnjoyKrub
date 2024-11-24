@@ -164,6 +164,7 @@ MonoBehaviour:
   _itemname: Tomyam
   _objectType: 1
   _foodCategory: 2
-  stateSprites: []
+  stateSprites:
+  - {fileID: -1550092275, guid: 35e425af570fb7341a2de97e15fe43ca, type: 3}
   cookingState: 2
   isNewlyCreated: 1

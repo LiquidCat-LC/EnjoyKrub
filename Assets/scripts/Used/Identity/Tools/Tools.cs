@@ -19,6 +19,7 @@ public class Tools : Identity
 
     [Header("State")]
     public bool isReady = false;
+    public List<Sprite> cookingStateSprite;
 
     void Awake()
     {

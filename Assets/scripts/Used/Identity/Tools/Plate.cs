@@ -87,7 +87,7 @@ public class Plate : Identity
     {
         List<GameObject> dishes = GetAllDishes();
         
-        if (dishes.Count == 0)
+        if (dishes.Count < 3)
         {
             Debug.Log("No dishes on the plate.");
             return false;

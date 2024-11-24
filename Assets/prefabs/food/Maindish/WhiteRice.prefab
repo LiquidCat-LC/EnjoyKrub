@@ -107,7 +107,7 @@ MonoBehaviour:
   - {fileID: 1054102916, guid: bb9f9a6cea6fe23418cfd223b5aba531, type: 3}
   cookingState: 0
   isNewlyCreated: 1
-  cookingTime: 20
+  cookingTime: 15
   stock: 3
 --- !u!58 &6811286739386283530
 CircleCollider2D:

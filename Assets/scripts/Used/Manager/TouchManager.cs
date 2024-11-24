@@ -59,14 +59,6 @@ public class TouchManager : MonoBehaviour
             Timer(RaycastReturn);
         }
 
-        //Function 2
-        // if (rayHit.collider != null && rayHit.collider.CompareTag("panel"))
-        // {
-        //     Debug.Log(tablePanels.Length);
-        //     Debug.Log("Change panel");
-        //     changePanel();
-        // }
-
     }
 
     private void Timer(GameObject objToChange)
@@ -87,7 +79,7 @@ public class TouchManager : MonoBehaviour
 
         yield return new WaitForEndOfFrame();
 
-        if (page >= tablePanels.Length-1)
+        if (page >= tablePanels.Length - 1)
         {
             currentPanel.SetActive(false);
             page = 0;
@@ -100,7 +92,7 @@ public class TouchManager : MonoBehaviour
             tablePanels[page].SetActive(true);
         }
 
-        ActivateChildren(currentPanel);
+        ActivateChildren(tablePanels[page]);
     }
 
     void DeactivateChildren(GameObject parent)
@@ -109,12 +101,13 @@ public class TouchManager : MonoBehaviour
         {
             foreach (Transform child in parent.transform)
             {
-                if (child.gameObject.GetComponent<Tools>() != null)
+                if (child.gameObject.TryGetComponent<Tools>(out Tools toolsComponent))
                 {
-                    child.gameObject.GetComponent<Tools>().readyToSwitch = true;
+                    toolsComponent.readyToSwitch = true;
+                    Debug.Log($"Deactivating {child.name} / readyToSwitch: {toolsComponent.readyToSwitch}");
                 }
 
-                child.gameObject.SetActive(false);
+                child.gameObject.SetActive(false); 
                 DeactivateChildren(child.gameObject);
             }
         }
@@ -126,14 +119,16 @@ public class TouchManager : MonoBehaviour
         {
             foreach (Transform child in parent.transform)
             {
-                if (child.gameObject.GetComponent<Tools>() != null)
+                if (child.gameObject.TryGetComponent<Tools>(out Tools toolsComponent))
                 {
-                    child.gameObject.GetComponent<Tools>().readyToSwitch = false;
+                    toolsComponent.readyToSwitch = false;
+                    Debug.Log($"Activating {child.name} / readyToSwitch: {toolsComponent.readyToSwitch}");
                 }
 
-                child.gameObject.SetActive(true);
-                ActivateChildren(child.gameObject);
+                child.gameObject.SetActive(true); 
+                ActivateChildren(child.gameObject); 
             }
+
         }
     }
     #endregion

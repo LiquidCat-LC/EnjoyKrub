@@ -164,6 +164,7 @@ MonoBehaviour:
   _itemname: Palo
   _objectType: 1
   _foodCategory: 2
-  stateSprites: []
+  stateSprites:
+  - {fileID: 1400372276, guid: bb8ef69d6aaa6fe459ac22dfe45b1cca, type: 3}
   cookingState: 2
   isNewlyCreated: 1

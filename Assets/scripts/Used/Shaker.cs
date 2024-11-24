@@ -63,8 +63,8 @@ public class Shaker : MonoBehaviour
         while (fillAmount < 1f && isShaking)
         {
             Debug.Log("Shake");
-            fillAmount += Time.deltaTime * 2f; // ปรับความเร็วในการเติม
-            barImage.fillAmount = fillAmount; // เติม bar
+            fillAmount += Time.deltaTime * 2f; 
+            barImage.fillAmount = fillAmount; 
             yield return null;
         }
 

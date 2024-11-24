@@ -20,6 +20,10 @@ public class GameManager : MonoBehaviour
     public TMP_Text mainDishOrderText;
     public TMP_Text sideDishOrderText;
     public TMP_Text curryOrderText;
+    [Header("Setting Image")]
+    public Image mainDishOrderImage;
+    public Image sideDishOrderImage;
+    public Image curryOrderImage;
 
     [Header("All menu")]
     public GameObject[] mainDishes;
@@ -43,6 +47,7 @@ public class GameManager : MonoBehaviour
         _player = FindObjectOfType<PlayerManager>();
         _player.TotalCostumer_Success = 0;
         _player.TotalCostumer_Fail = 0;
+        _player.TotalMoney = 0;
         //RandomOrder();
         //RemoveOrder(ordersMenu, 2);
         //CallOrder(ordersMenu,1);
@@ -65,9 +70,14 @@ public class GameManager : MonoBehaviour
 
     public void CallOrder(Orders order)
     {
-        mainDishOrderText.text = $"Main Dish: {order.mainDish.GetComponent<Food>()._itemname}";
-        sideDishOrderText.text = $"Side Dish: {order.sideDish.GetComponent<Food>()._itemname}";
-        curryOrderText.text = $"Curry: {order.curry.GetComponent<Food>()._itemname}";
+        //text
+        mainDishOrderText.text = order.mainDish.GetComponent<Food>()._itemname;
+        sideDishOrderText.text = order.sideDish.GetComponent<Food>()._itemname;
+        curryOrderText.text = order.curry.GetComponent<Food>()._itemname;
+        //image
+        mainDishOrderImage.sprite = order.mainDish.GetComponent<Food>().stateSprites[1];
+        sideDishOrderImage.sprite = order.sideDish.GetComponent<Food>().stateSprites[1];
+        curryOrderImage.sprite = order.curry.GetComponent<Food>().stateSprites[0];
     }
 
     public Orders[] RemoveOrder(Orders[] order, int num)
@@ -104,11 +114,13 @@ public class GameManager : MonoBehaviour
     {
         if (CheckOrder(ordersMenu[orDNum]) == true)
         {
-            return _player.moneyCollect += random.Next(30, 80);
+            return _player.TotalMoney += random.Next(30, 80);
             ;
         }
         return _player.moneyCollect += 0;
     }
+
+    
 
     public void Serving()
     {
@@ -125,7 +137,7 @@ public class GameManager : MonoBehaviour
                 .GetComponent<Customer>()
                 .SetCustomerState(CustomerState.Happy);
             _player.TotalCostumer_Success++;
-            print(_player.TotalCostumer_Success++);
+            print(_player.TotalCostumer_Success);
         }
         else
         {

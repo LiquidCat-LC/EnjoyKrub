@@ -18,6 +18,7 @@ public class PlayerManager : MonoBehaviour
     [Header("Overall")]
     public int TotalCostumer_Success;
     public int TotalCostumer_Fail;
+    public int TotalMoney;
     public int moneyCollect;
 
     public static PlayerManager Instance;
@@ -72,11 +73,13 @@ public class PlayerManager : MonoBehaviour
             });
     }
     #endregion
-    public void checkResult(string userId)
+    public bool checkResult(string userId)
     {
         if (TotalCostumer_Fail <= allowedMistakes)
         {
             level++; // เพิ่มเลเวล
+            moneyCollect += TotalMoney;
+            
             string userUrl = $"{url}/users/{userId}.json?auth={secret}";
 
             User updatedUser = new User(userId, level, moneyCollect);
@@ -91,11 +94,14 @@ public class PlayerManager : MonoBehaviour
                 {
                     Debug.LogError($"Failed to update user data: {error.Message}");
                 });
+            return true;
         }
         else
         {
             Debug.Log("No update needed: Too many failed customers.");
+            return false;
         }
+
     }
 
     #region Difficulty

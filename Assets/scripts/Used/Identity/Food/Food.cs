@@ -23,7 +23,7 @@ public class Food : Identity
     //public GameObject dragSystem;
 
     [Header("State status")]
-    public List<Sprite> stateSprites; // สไปรต์สำหรับสถานะต่างๆ (จัดเรียงตาม CookingState)
+    public List<Sprite> stateSprites; 
     private SpriteRenderer spriteRenderer;
     public CookingState cookingState;
     public bool isNewlyCreated = true;
@@ -48,17 +48,14 @@ public class Food : Identity
         break;
 
         case CookingState.Raw:
-        //GetComponent<SpriteRenderer>().color = Color.red;
         spriteRenderer.sprite = stateSprites[0];
         break;
 
         case CookingState.Cooked:
-        //GetComponent<SpriteRenderer>().color = Color.green;
         spriteRenderer.sprite = stateSprites[1];
         break;
 
         case CookingState.Overcooked:
-        //GetComponent<SpriteRenderer>().color = Color.blue;
         spriteRenderer.sprite = stateSprites[2];
         break;
 

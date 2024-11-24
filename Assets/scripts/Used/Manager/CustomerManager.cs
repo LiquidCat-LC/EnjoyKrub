@@ -27,6 +27,7 @@ public class CustomerManager : MonoBehaviour
     public float customerMoveSpeed;
     public float customerSpawnSpeed;
     public List<Transform> queuePositions;
+    [SerializeField] private Transform customerParent;
 
     [Header("Customer action")]
     public bool IsAllCustomerspawn;
@@ -50,7 +51,7 @@ public class CustomerManager : MonoBehaviour
 
     IEnumerator SpawnCustomerRoutine(int _customers)
     {
-        while (customerOfToday < _customers) // Spawn ตามจำนวน customers
+        while (customerOfToday < _customers) 
         {
             if (customerQueue.Count < queuePositions.Count - 2)
             {
@@ -77,7 +78,8 @@ public class CustomerManager : MonoBehaviour
         GameObject newCustomer = Instantiate(
             thisCustomer,
             queuePositions[0].position,
-            Quaternion.identity
+            Quaternion.identity,
+            customerParent
         );
         customerQueue.Add(newCustomer);
         customerOfToday++;

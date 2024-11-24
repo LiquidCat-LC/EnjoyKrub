@@ -27,7 +27,7 @@ public class StockCookTool : Tools
         {
             MainDish MainDishScript = GetComponentInChildren<MainDish>();
 
-            if (MainDishScript != null && !isCooking && isOutOfStock == true && MainDishScript.cookingState != CookingState.Cooked &&MainDishScript.cookingState != CookingState.Overcooked)
+            if (MainDishScript != null && !isCooking && isOutOfStock == true && MainDishScript.cookingState != CookingState.Cooked && MainDishScript.cookingState != CookingState.Overcooked)
             {
                 isReady = true;
                 cookingCoroutine = StartCoroutine(Cooking(MainDishScript));
@@ -40,11 +40,19 @@ public class StockCookTool : Tools
     {
         print($"Stock: {stock}, OFS: {isOutOfStock}, IsNewly: {other.GetComponent<Food>().isNewlyCreated}");
 
-        if (stock > 0 && isOutOfStock == false && other.GetComponent<Food>().isNewlyCreated == true && !readyToSwitch)
+        if (stock > 0 && isOutOfStock == false && !readyToSwitch)
         {
             takeItem();
         }
-        base.OnTriggerExit2D(other);
+
+        Food food = other.GetComponent<Food>();
+
+        if (food != null && table != null && !readyToSwitch)
+        {
+            other.transform.SetParent(table.transform);
+            isReady = false;
+            other.GetComponent<Food>().isNewlyCreated = false;
+        }
 
         if (cookingCoroutine != null)
         {
@@ -59,7 +67,6 @@ public class StockCookTool : Tools
     private IEnumerator Cooking(MainDish mainDish)
     {
         MainDish MainDishScript = GetComponentInChildren<MainDish>();
-        stockPrefab = mainDish.gameObject;
 
         if (mainDish != null)
         {
@@ -83,10 +90,9 @@ public class StockCookTool : Tools
                 }
                 mainDish.cookingState = CookingState.Cooked;
                 mainDish.SetCookingStatus(CookingState.Cooked);
-                //MainDishScript.GetComponent<SpriteRenderer>().color = Color.green;
-                //mainDish.SetCookingStatus(CookingState.Cooked);
                 mainDish.isNewlyCreated = true;
                 stock = mainDish.stock;
+                stockPrefab = mainDish.gameObject;
 
                 Debug.Log("Stock :" + stock);
                 isCooking = false;
@@ -103,12 +109,11 @@ public class StockCookTool : Tools
             Debug.Log("Remaining stock: " + stock);
             if (stock > 0)
             {
-                GameObject newObject = Instantiate(stockPrefab, transform.position + spawnStockPos, Quaternion.identity);
-                newObject.transform.localScale = new Vector3(0.4f,0.4f,0.4f);
-                newObject.transform.SetParent(transform);
-                newObject.GetComponent<Food>().isNewlyCreated = true;
-                newObject.GetComponent<Food>().cookingState = CookingState.Cooked;
-                newObject.GetComponent<Food>().SetCookingStatus(CookingState.Cooked);
+                GameObject newObject = Instantiate(stockPrefab, transform.position + spawnStockPos, Quaternion.identity, transform);
+                newObject.transform.localScale = new Vector3(2f, 2f, 2f);
+                newObject.GetComponent<MainDish>().isNewlyCreated = true;
+                newObject.GetComponent<MainDish>().cookingState = CookingState.Cooked;
+                newObject.GetComponent<MainDish>().SetCookingStatus(CookingState.Cooked);
             }
             isOutOfStock = (stock == 0);
             return true;
@@ -122,4 +127,6 @@ public class StockCookTool : Tools
         }
     }
     #endregion
+
+
 }
