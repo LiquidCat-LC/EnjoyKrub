@@ -101,6 +101,7 @@ public class CustomerManager : MonoBehaviour
         if (customer == customerQueue[0] && !IsSomeoneOrder)
         {
             print("Q1 at pos already");
+            customerQueue[0].GetComponent<Customer>().SetCustomerState(CustomerState.Order);
             _orderManager.RandomOrder();
             IsSomeoneOrder = true;
             _orderManager.OrderNote.SetActive(IsSomeoneOrder);

@@ -35,7 +35,7 @@ public class BannerAdExample : MonoBehaviour
 
         // Disable the button until an ad is ready to show:
         //_showBannerButton.interactable = false;
-        _hideBannerButton.interactable = false;
+        //_hideBannerButton.interactable = false;
 
 
         Advertisement.Banner.SetPosition(_bannerPosition);
@@ -66,11 +66,11 @@ public class BannerAdExample : MonoBehaviour
         // Configure the Show Banner button to call the ShowBannerAd() method when clicked:
         //_showBannerButton.onClick.AddListener(ShowBannerAd);
         // Configure the Hide Banner button to call the HideBannerAd() method when clicked:
-        _hideBannerButton.onClick.AddListener(HideBannerAd);
+        //_hideBannerButton.onClick.AddListener(HideBannerAd);
 
         // Enable both buttons:
         //_showBannerButton.interactable = true;
-        _hideBannerButton.interactable = true;
+        //_hideBannerButton.interactable = true;
         ShowBannerAd();
     }
 
@@ -115,6 +115,6 @@ public class BannerAdExample : MonoBehaviour
         // Clean up the listeners:
         //_loadBannerButton.onClick.RemoveAllListeners();
         //_showBannerButton.onClick.RemoveAllListeners();
-        _hideBannerButton.onClick.RemoveAllListeners();
+        //_hideBannerButton.onClick.RemoveAllListeners();
     }
 }

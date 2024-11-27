@@ -7,17 +7,17 @@ using UnityEngine.UIElements;
 
 public class TouchManager : MonoBehaviour
 {
-    [SerializeField] private Camera mainCamera;
+    [SerializeField]
+    private Camera mainCamera;
     private PlayerInput playerInput;
     private InputAction touchPositionAction;
     private InputAction touchPressAction;
 
-    //f1
-    [SerializeField] Canvas timer;
-
     //f2
-    [SerializeField] private GameObject[] tablePanels;
+    [SerializeField]
+    private GameObject[] tablePanels;
     private int page = 0;
+
     //Tools tool;
 
 
@@ -40,31 +40,18 @@ public class TouchManager : MonoBehaviour
 
     private void TouchPressed(InputAction.CallbackContext context)
     {
-        //check 
+        //check
         float value = context.ReadValue<float>();
         Debug.Log(value);
 
         //check tag
-        var rayHit = Physics2D.GetRayIntersection(Camera.main.ScreenPointToRay(touchPositionAction.ReadValue<Vector2>()));
+        var rayHit = Physics2D.GetRayIntersection(
+            Camera.main.ScreenPointToRay(touchPositionAction.ReadValue<Vector2>())
+        );
         if (rayHit.collider != null)
         {
             Debug.Log(rayHit.collider.tag);
         }
-
-        //function 1
-        if (rayHit.collider != null && rayHit.collider.CompareTag("Cooking"))
-        {
-            GameObject RaycastReturn = rayHit.collider.gameObject;
-            Debug.Log(rayHit.collider.tag);
-            Timer(RaycastReturn);
-        }
-
-    }
-
-    private void Timer(GameObject objToChange)
-    {
-        objToChange.GetComponent<SpriteRenderer>().color = Color.green;
-        timer.gameObject.SetActive(true);
     }
 
     #region Change Panel
@@ -73,29 +60,30 @@ public class TouchManager : MonoBehaviour
         Debug.Log("Page:" + page);
         StartCoroutine(DeactivateAndSwitchPanel(tablePanels[page]));
     }
-    IEnumerator DeactivateAndSwitchPanel(GameObject currentPanel)
+
+    private IEnumerator DeactivateAndSwitchPanel(GameObject currentPanel)
     {
-        DeactivateChildren(currentPanel);
+        SetReadyToSwitch(currentPanel, true);
 
         yield return new WaitForEndOfFrame();
 
+        currentPanel.SetActive(false);
+
         if (page >= tablePanels.Length - 1)
         {
-            currentPanel.SetActive(false);
             page = 0;
-            tablePanels[page].SetActive(true);
         }
         else
         {
-            currentPanel.SetActive(false);
             page += 1;
-            tablePanels[page].SetActive(true);
         }
 
+        tablePanels[page].SetActive(true);
+        SetReadyToSwitch(tablePanels[page], false);
         ActivateChildren(tablePanels[page]);
     }
 
-    void DeactivateChildren(GameObject parent)
+    private void SetReadyToSwitch(GameObject parent, bool state)
     {
         if (parent != null)
         {
@@ -103,32 +91,30 @@ public class TouchManager : MonoBehaviour
             {
                 if (child.gameObject.TryGetComponent<Tools>(out Tools toolsComponent))
                 {
-                    toolsComponent.readyToSwitch = true;
-                    Debug.Log($"Deactivating {child.name} / readyToSwitch: {toolsComponent.readyToSwitch}");
+                    toolsComponent.readyToSwitch = state;
+                    Debug.Log(
+                        $"{(state ? "Setting" : "Resetting")} readyToSwitch for {child.name} to {state}"
+                    );
                 }
 
-                child.gameObject.SetActive(false); 
-                DeactivateChildren(child.gameObject);
+                SetReadyToSwitch(child.gameObject, state);
             }
         }
     }
 
-    void ActivateChildren(GameObject parent)
+    private void ActivateChildren(GameObject parent)
     {
         if (parent != null)
         {
             foreach (Transform child in parent.transform)
             {
-                if (child.gameObject.TryGetComponent<Tools>(out Tools toolsComponent))
+                if (!child.CompareTag("FakeUI"))
                 {
-                    toolsComponent.readyToSwitch = false;
-                    Debug.Log($"Activating {child.name} / readyToSwitch: {toolsComponent.readyToSwitch}");
+                    child.gameObject.SetActive(true);
+
+                    ActivateChildren(child.gameObject);
                 }
-
-                child.gameObject.SetActive(true); 
-                ActivateChildren(child.gameObject); 
             }
-
         }
     }
     #endregion

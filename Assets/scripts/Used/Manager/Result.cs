@@ -14,6 +14,10 @@ public class Result : MonoBehaviour
     [SerializeField] private TMP_Text successText;
     [SerializeField] private TMP_Text moneyText;
     [SerializeField] private TMP_Text overallText;
+    [Header("sprite")]
+    public GameObject playButton;
+    [SerializeField] private Sprite rePlay;
+    [SerializeField] private Sprite playNext;
 
     public void Start()
     {
@@ -33,17 +37,19 @@ public class Result : MonoBehaviour
 
     public void checkRest()
     {
-        failText.text = _player.TotalCostumer_Fail.ToString();
+        failText.text = $"{_player.TotalCostumer_Fail.ToString()} \n / \n {_player.allowedMistakes.ToString()}";
         successText.text = _player.TotalCostumer_Success.ToString();
         moneyText.text = _player.TotalMoney.ToString();
-        _player.checkResult(_player.userCurrent);
-        if(_player.checkResult(_player.userCurrent) == true)
+        _player.checkResult("user123");
+        if(_player.checkResult("user123") == true)
         {
             overallText.text = "Pass" ;
+            playButton.GetComponent<Image>().sprite = playNext;
         }
         else
         {
             overallText.text = "Fail" ;
+            playButton.GetComponent<Image>().sprite = rePlay;
         }
     }
 

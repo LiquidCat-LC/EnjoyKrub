@@ -115,7 +115,7 @@ public class PlayerManager : MonoBehaviour
 
     [Header("Difficulty : current")]
     public int customers;
-    int allowedMistakes;
+    public int allowedMistakes;
 
     public void CalculateDifficulty(int level)
     {

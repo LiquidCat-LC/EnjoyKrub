@@ -20,14 +20,14 @@ public class CookingTools : Tools
     public override void OnTriggerStay2D(Collider2D other)
     {
         base.OnTriggerStay2D(other);
-
-        if (transform.childCount == 1 && other.CompareTag("Food"))
+        
+        if (transform.childCount == 1 && other.CompareTag("Food")&&other.GetComponent<SideDish>().cookingState != CookingState.Cooked&&other.GetComponent<SideDish>().cookingState != CookingState.Overcooked)
         {
             SideDish SideDishScript = GetComponentInChildren<SideDish>();
 
             foreach (GameObject food in allowedFoodPrefabs)
             {
-                Food foodd = food.GetComponent<Food>();
+                SideDish foodd = food.GetComponent<SideDish>();
                 if (
                     SideDishScript != null
                     && !isCooking
@@ -36,7 +36,6 @@ public class CookingTools : Tools
                 {
                     isReady = true;
                     cookingCoroutine = StartCoroutine(Cooking(SideDishScript));
-                    cookingCircle.gameObject.SetActive(true);
 
                 }
             }
@@ -58,13 +57,14 @@ public class CookingTools : Tools
     #endregion
 
     [Header("Cooking UI")]
-    public Image cookingCircle; // Image วงกลมสำหรับแสดงสถานะ
-    public Color cookingColor = Color.green; // สีขณะกำลังทำอาหาร (Raw)
-    public Color cookedColor = Color.yellow; // สีหลังจากสุก (Cooked)
-    public Color burntColor = Color.red; // สีหลังจากไหม้ (Overcooked)
+    public Image cookingCircle; 
+    public Color cookingColor; 
+    public Color cookedColor;
+    public Color burntColor;
 
     private IEnumerator Cooking(SideDish sideDish)
     {
+        cookingCircle.gameObject.SetActive(true);
         if (sideDish.cookingState == CookingState.Ingred)
         {
             sideDish.cookingState = CookingState.Raw;
@@ -75,27 +75,22 @@ public class CookingTools : Tools
         {
             isCooking = true;
 
-            // เชื่อมโยงกับ UI
-            float totalCookingTime = sideDish.maxCookingTime * 2; // รวมเวลาทั้งหมด (เวลาสุก + ไหม้)
-            float cookingStartTime = sideDish.cookingTime + sideDish.maxCookingTime; // เวลาเริ่มต้น
+            float totalCookingTime = sideDish.maxCookingTime * 2;
 
             while (sideDish.cookingTime > -sideDish.maxCookingTime)
             {
                 sideDish.cookingTime -= Time.deltaTime;
 
-                // คำนวณ progress
                 float progress = 1 - (sideDish.cookingTime + sideDish.maxCookingTime) / totalCookingTime;
 
-                // อัปเดต UI วงกลม
                 cookingCircle.fillAmount = progress;
 
-                // เปลี่ยนสีตามสถานะ
                 if (sideDish.cookingTime <= 0 && sideDish.cookingState != CookingState.Cooked)
                 {
                     Debug.Log("Food is now cooked!");
                     sideDish.cookingState = CookingState.Cooked;
                     sideDish.SetCookingStatus(CookingState.Cooked);
-                    cookingCircle.color = cookedColor; // เปลี่ยนสีเป็นสีของ Cooked
+                    cookingCircle.color = cookedColor;
                 }
                 else if (
                     sideDish.cookingTime <= -sideDish.maxCookingTime
@@ -105,17 +100,18 @@ public class CookingTools : Tools
                     Debug.Log("Food is overcooked!");
                     sideDish.cookingState = CookingState.Overcooked;
                     sideDish.SetCookingStatus(CookingState.Overcooked);
-                    cookingCircle.color = burntColor; // เปลี่ยนสีเป็นสีของ Overcooked
+                    cookingCircle.color = burntColor;
                     break;
                 }
                 else if (sideDish.cookingState == CookingState.Raw)
                 {
-                    cookingCircle.color = cookingColor; // สีขณะกำลังทำอาหาร
+                    cookingCircle.color = cookingColor;
                 }
 
                 yield return null;
             }
 
+            cookingCircle.gameObject.SetActive(false);
             isCooking = false;
         }
         else

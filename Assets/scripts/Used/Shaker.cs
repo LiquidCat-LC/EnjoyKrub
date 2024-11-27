@@ -68,7 +68,7 @@ public class Shaker : MonoBehaviour
             yield return null;
         }
 
-        if(fillAmount > 1f)
+        if(fillAmount > 10f)
         {
             Debug.Log("fin");
             _customerManager.hadPetting = true;

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1172408891728744000}
   m_Layer: 0
   m_Name: Cutting board
-  m_TagString: Cooking
+  m_TagString: CookingTools
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 6.32, y: -3.92, z: 2}
-  m_LocalScale: {x: 2.5229135, y: 2.5229135, z: 2.5229135}
+  m_LocalScale: {x: 0.3286347, y: 0.3286347, z: 0.3286347}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -118,9 +118,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.27721068}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 4.7967467
 --- !u!114 &1172408891728744000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -136,10 +136,15 @@ MonoBehaviour:
   _itemname: Cutting board
   _objectType: 2
   dragSystem: {fileID: 0}
-  isReady: 0
   table: {fileID: 0}
   readyToSwitch: 0
+  isReady: 0
+  cookingStateSprite: []
   isCooking: 0
   allowedFoodPrefabs:
   - {fileID: 4623986570552942779, guid: c61264a6c64c93348b80c93819ce4630, type: 3}
   - {fileID: 6753749451124716079, guid: 1b39f45e6d50173478eeeaa051db5f04, type: 3}
+  cookingCircle: {fileID: 0}
+  cookingColor: {r: 0.73333335, g: 0.6784314, b: 0.86274517, a: 1}
+  cookedColor: {r: 0.7579506, g: 0.8207547, b: 0.53813636, a: 1}
+  burntColor: {r: 1, g: 0.7411765, b: 0.70980394, a: 1}

@@ -140,7 +140,7 @@ MonoBehaviour:
   stateSprites:
   - {fileID: 835243446, guid: e70d52db173105a43ad93c82bad00267, type: 3}
   - {fileID: -110214815, guid: e70d52db173105a43ad93c82bad00267, type: 3}
-  - {fileID: -110214815, guid: e70d52db173105a43ad93c82bad00267, type: 3}
+  - {fileID: 580131559, guid: dfab81a893acd4a4e9f13255eb515ce4, type: 3}
   cookingState: 0
   isNewlyCreated: 1
   cookingTime: 3

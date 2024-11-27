@@ -10,6 +10,7 @@ TagManager:
   - panel
   - CookingTools
   - OrderHere
+  - FakeUI
   layers:
   - Default
   - TransparentFX
