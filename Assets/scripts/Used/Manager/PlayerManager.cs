@@ -8,9 +8,9 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
-    // public const string url =
-    //     "https://enjoykrub-ae32e-default-rtdb.asia-southeast1.firebasedatabase.app";
-    // public const string secret = "HDRqy4XcxgYRVXYJsKpV6y4efQhyqa4vocBp2mDl";
+    public const string url =
+        "https://enjoykrub-ae32e-default-rtdb.asia-southeast1.firebasedatabase.app";
+    public const string secret = "HDRqy4XcxgYRVXYJsKpV6y4efQhyqa4vocBp2mDl";
     public static string _userId;
     public string userCurrent;
     public List<User> userNowList = new List<User>();
@@ -37,41 +37,41 @@ public class PlayerManager : MonoBehaviour
     }
 
     #region Test
-    // public void inputID(string userID)
-    // {
-    //     string userUrl = $"{url}/users/{userID}.json?auth={secret}";
+    public void inputID(string userID)
+    {
+        string userUrl = $"{url}/users/{userID}.json?auth={secret}";
 
-    //     User newUser = new User(userID, 1, 100); // ใช้ userID ใน User object ด้วย
+        User newUser = new User(userID, 1, 100); // ใช้ userID ใน User object ด้วย
 
-    //     RestClient
-    //         .Put(userUrl, newUser)
-    //         .Then(response =>
-    //         {
-    //             Debug.Log($"User data for {userID} saved successfully.");
-    //         })
-    //         .Catch(error =>
-    //         {
-    //             Debug.LogError($"Failed to save user data: {error.Message}");
-    //         });
-    // }
+        RestClient
+            .Put(userUrl, newUser)
+            .Then(response =>
+            {
+                Debug.Log($"User data for {userID} saved successfully.");
+            })
+            .Catch(error =>
+            {
+                Debug.LogError($"Failed to save user data: {error.Message}");
+            });
+    }
 
-    // public void updateUser(string userId)
-    // {
-    //     string userUrl = $"{url}/users/{userId}.json?auth={secret}";
+    public void updateUser(string userId)
+    {
+        string userUrl = $"{url}/users/{userId}.json?auth={secret}";
 
-    //     User updatedUser = new User(userId, level, moneyCollect);
+        User updatedUser = new User(userId, level, moneyCollect);
 
-    //     RestClient
-    //         .Put(userUrl, updatedUser)
-    //         .Then(response =>
-    //         {
-    //             Debug.Log($"User data for {userId} updated successfully!");
-    //         })
-    //         .Catch(error =>
-    //         {
-    //             Debug.LogError($"Failed to update user data: {error.Message}");
-    //         });
-    // }
+        RestClient
+            .Put(userUrl, updatedUser)
+            .Then(response =>
+            {
+                Debug.Log($"User data for {userId} updated successfully!");
+            })
+            .Catch(error =>
+            {
+                Debug.LogError($"Failed to update user data: {error.Message}");
+            });
+    }
     #endregion
     public bool checkResult(string userId)
     {
@@ -80,20 +80,20 @@ public class PlayerManager : MonoBehaviour
             level++; // เพิ่มเลเวล
             moneyCollect += TotalMoney;
             
-            // string userUrl = $"{url}/users/{userId}.json?auth={secret}";
+            string userUrl = $"{url}/users/{userId}.json?auth={secret}";
 
-            // User updatedUser = new User(userId, level, moneyCollect);
+            User updatedUser = new User(userId, level, moneyCollect);
 
-            // RestClient
-            //     .Put(userUrl, updatedUser)
-            //     .Then(response =>
-            //     {
-            //         Debug.Log($"User data updated successfully! New Level: {level}");
-            //     })
-            //     .Catch(error =>
-            //     {
-            //         Debug.LogError($"Failed to update user data: {error.Message}");
-            //     });
+            RestClient
+                .Put(userUrl, updatedUser)
+                .Then(response =>
+                {
+                    Debug.Log($"User data updated successfully! New Level: {level}");
+                })
+                .Catch(error =>
+                {
+                    Debug.LogError($"Failed to update user data: {error.Message}");
+                });
             return true;
         }
         else

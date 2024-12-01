@@ -3251,7 +3251,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5122212282495283617, guid: 7765b6c6f48092d469395773b7ed579e, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5122212282495283617, guid: 7765b6c6f48092d469395773b7ed579e, type: 3}
       propertyPath: _hideBannerButton
@@ -4779,7 +4779,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 25.76, y: 21.395391}
+    oldSize: {x: 25.768658, y: 21.39}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
