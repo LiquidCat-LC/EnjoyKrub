@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "182411302400",
+    "firebase_url": "https://enjoykrub-ae32e-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "enjoykrub-ae32e",
+    "storage_bucket": "enjoykrub-ae32e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:182411302400:android:0a27e507185f6750222ae5",
+        "android_client_info": {
+          "package_name": "com.MeowTale.EnjoyKrub"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXWlCl_VTLmkvmXN52Nuz_I_Y_PNsdUMA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:182411302400:android:437fe680e7831ecd222ae5",
+        "android_client_info": {
+          "package_name": "com.enjoykrub.game"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXWlCl_VTLmkvmXN52Nuz_I_Y_PNsdUMA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:182411302400:android:3cf6b1a07a8e38b8222ae5",
+        "android_client_info": {
+          "package_name": "com.enjoykrubb.game"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXWlCl_VTLmkvmXN52Nuz_I_Y_PNsdUMA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

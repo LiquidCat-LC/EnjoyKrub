@@ -638,6 +638,10 @@ PrefabInstance:
       propertyPath: loadingProgressText
       value: 
       objectReference: {fileID: 1899193848}
+    - target: {fileID: 3590743803120133479, guid: b0ecc9235c868af49940b2e27e0b09d9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6058813562898883805, guid: b0ecc9235c868af49940b2e27e0b09d9, type: 3}
       propertyPath: m_Name
       value: MyScene
@@ -687,8 +691,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ac062afc79e7404f80fae6e0bb94540, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _androidGameId: 5718147
-  _iOSGameId: 5718146
+  _androidGameId: 5740996
+  _iOSGameId: 5740997
   _testMode: 1
   adsExample: {fileID: 436094052}
 --- !u!114 &436094054 stripped
