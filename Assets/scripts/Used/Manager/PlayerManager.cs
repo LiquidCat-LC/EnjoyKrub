@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Proyecto26;
 using SimpleJSON;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -20,6 +21,8 @@ public class PlayerManager : MonoBehaviour
     public int TotalCostumer_Fail;
     public int TotalMoney;
     public int moneyCollect;
+
+    public Button _playButton;
 
     public static PlayerManager Instance;
 
@@ -73,14 +76,31 @@ public class PlayerManager : MonoBehaviour
             });
     }
     #endregion
-    public bool checkResult(string userId)
+    public bool checkResult()
     {
-        if (TotalCostumer_Fail <= allowedMistakes)
+        bool isSuccess = TotalCostumer_Fail <= allowedMistakes;
+        //string userId = "user123";
+        // ส่ง event
+        string levelId = $"Level_{level}";
+        AnalyticsHelper.TrackLevelAttempt(levelId, isSuccess);
+
+        if (isSuccess)
         {
-            level++; // เพิ่มเลเวล
+            level++;
             moneyCollect += TotalMoney;
-            
-            string userUrl = $"{url}/users/{userId}.json?auth={secret}";
+            //FirebaseTrack(userId);
+            return true;
+        }
+        else
+        {
+            Debug.Log("No update needed: Too many failed customers.");
+            return false;
+        }
+    }
+
+    private void FirebaseTrack(string userId)
+    {
+        string userUrl = $"{url}/users/{userId}.json?auth={secret}";
 
             User updatedUser = new User(userId, level, moneyCollect);
 
@@ -94,14 +114,6 @@ public class PlayerManager : MonoBehaviour
                 {
                     Debug.LogError($"Failed to update user data: {error.Message}");
                 });
-            return true;
-        }
-        else
-        {
-            Debug.Log("No update needed: Too many failed customers.");
-            return false;
-        }
-
     }
 
     #region Difficulty

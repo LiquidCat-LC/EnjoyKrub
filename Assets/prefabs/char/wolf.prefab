@@ -387,7 +387,7 @@ MonoBehaviour:
   _itemname: wolf
   _objectType: 0
   currentState: 0
-  patienceDuration: 40
+  patienceDuration: 60
   Idle: {fileID: 8382171805501174103}
   Order: {fileID: 3313013915323664559}
   Angry: {fileID: 3851329830249513691}

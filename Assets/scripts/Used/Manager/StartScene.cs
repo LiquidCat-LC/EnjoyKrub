@@ -33,6 +33,19 @@ public class StartScene : MonoBehaviour
         StartCoroutine(LoadUserData("user123"));
     }
 
+    public void simpleUser()
+    {
+        User simple = new User("Simple",1,0);
+        Debug.Log($"Fetched User Level: {simple.levelDay}, Money: {simple.money}");
+
+        _player.userNowList.Clear();
+        _player.userNowList.Add(simple);
+        _player.level = simple.levelDay;
+        _player.moneyCollect = simple.money;
+
+        _player.CalculateDifficulty(_player.level);
+    }
+
     private IEnumerator LoadUserData(string userId)
     {
         //string userId = "user123";
@@ -86,34 +99,40 @@ public class StartScene : MonoBehaviour
     #region Animation
     [SerializeField] private RectTransform part1Panel;
     [SerializeField] private RectTransform part2Panel;
-    [SerializeField] private RectTransform rotatingRect;
-    [SerializeField] private GameObject saveDataPanel;
+    [SerializeField] private GameObject saveDataPanelslot1;
+    [SerializeField] private GameObject saveDataPanelslot2;
     [SerializeField] private Sprite newSprite;
-    [SerializeField] private TMP_Text NameText;
-    [SerializeField] private TMP_Text LevelText;
-    [SerializeField] private TMP_Text MoneyText;
+    [SerializeField] private TMP_Text[] slot1;
+    [SerializeField] private TMP_Text[] slot2;
 
     private bool spriteChanged = false;
 
-    public void LoadSave()
+    public void LoadSaveSlot1(RectTransform targetSlot)
     {
-        saveDataPanel.SetActive(false);
-        StartCoroutine(RotateAndShowData());
+        saveDataPanelslot1.SetActive(false);
+        StartCoroutine(RotateAndShowData(targetSlot,slot1,saveDataPanelslot1));
+    }
+    public void LoadSaveSlot2(RectTransform targetSlot)
+    {
+        saveDataPanelslot2.SetActive(false);
+        StartCoroutine(RotateAndShowData(targetSlot,slot2,saveDataPanelslot2));
+        startButton.interactable = true;
     }
 
-    private IEnumerator RotateAndShowData()
+    private IEnumerator RotateAndShowData(RectTransform target,TMP_Text[] listText,GameObject dataPanel)
     {
         float duration = 0.5f;
         float elapsed = 0f;
+        spriteChanged = false;
 
         while (elapsed < duration)
         {
             float angle = Mathf.Lerp(0, 360, elapsed / duration);
-            rotatingRect.rotation = Quaternion.Euler(0, angle, 0);
+            target.rotation = Quaternion.Euler(0, angle, 0);
 
             if (!spriteChanged && angle >= 90)
             {
-                ChangeSprite();
+                ChangeSprite(target);
                 spriteChanged = true;
             }
 
@@ -121,23 +140,23 @@ public class StartScene : MonoBehaviour
             yield return null;
         }
 
-        rotatingRect.rotation = Quaternion.Euler(0, 0, 0);
-        ShowSaveData();
+        target.rotation = Quaternion.Euler(0, 0, 0);
+        ShowSaveData(listText,dataPanel);
     }
 
-    private void ShowSaveData()
+    private void ShowSaveData(TMP_Text[] listText,GameObject dataPanel)
     {
-        NameText.text = _player.userNowList.FirstOrDefault()?.IDname.ToString();
-        LevelText.text = _player.level.ToString();
-        MoneyText.text = _player.moneyCollect.ToString();
-        saveDataPanel.SetActive(true);
+        listText[0].text = _player.userNowList.FirstOrDefault()?.IDname.ToString();
+        listText[1].text = _player.level.ToString();
+        listText[2].text = _player.moneyCollect.ToString();
+        dataPanel.SetActive(true);
     }
 
-    private void ChangeSprite()
+    private void ChangeSprite(RectTransform target)
     {
-        Image rectImage = rotatingRect.GetComponent<Image>();
+        Image rectImage = target.GetComponent<Image>();
         if (rectImage != null && newSprite != null)
-        {
+    {
             rectImage.sprite = newSprite;
             Debug.Log("Sprite changed at 90 degrees.");
         }
@@ -189,3 +208,4 @@ public class StartScene : MonoBehaviour
 
     #endregion
 }
+

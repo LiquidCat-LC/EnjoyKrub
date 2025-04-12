@@ -16,8 +16,7 @@ public class Result : MonoBehaviour
     [SerializeField] private TMP_Text overallText;
     [Header("sprite")]
     public GameObject playButton;
-    [SerializeField] private Sprite rePlay;
-    [SerializeField] private Sprite playNext;
+    public GameObject replayButton;
 
     public void Start()
     {
@@ -33,6 +32,9 @@ public class Result : MonoBehaviour
         visiblePosition = new Vector2(targetXPosition, billPanel.anchoredPosition.y);
 
         billPanel.anchoredPosition = hiddenPosition;
+
+        playButton.SetActive(false);
+        replayButton.SetActive(false);
     }
 
     public void checkRest()
@@ -40,17 +42,22 @@ public class Result : MonoBehaviour
         failText.text = $"{_player.TotalCostumer_Fail.ToString()} \n / \n {_player.allowedMistakes.ToString()}";
         successText.text = _player.TotalCostumer_Success.ToString();
         moneyText.text = _player.TotalMoney.ToString();
-        _player.checkResult("user123");
-        if(_player.checkResult("user123") == true)
+        bool isSuccess = _player.checkResult();
+        if(isSuccess)
         {
             overallText.text = "Pass" ;
-            playButton.GetComponent<Image>().sprite = playNext;
+            playButton.SetActive(true);
         }
         else
         {
             overallText.text = "Fail" ;
-            playButton.GetComponent<Image>().sprite = rePlay;
+            replayButton.SetActive(true);
         }
+    }
+    public void retry()
+    {
+        string levelId = $"Level_{_player.level}";
+        AnalyticsHelper.TrackRetry(levelId);
     }
 
     #region Animation

@@ -785,7 +785,7 @@ PlayerSettings:
     Legacy Analytics: 0
     Purchasing: 0
     UDP: 0
-    Unity Ads: 1
+    Unity Ads: 0
   luminIcon:
     m_Name: 
     m_ModelFolderPath: 
@@ -805,10 +805,10 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: 8753893a-1934-47ad-8d20-40f5039417f0
+  cloudProjectId: b43dffd0-acad-4c39-b4d4-9633b024f026
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: enjoykrub
+  projectName: EnjoyKubAna
   organizationId: unity_da4ef8ec55c4ebf7ce85
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0

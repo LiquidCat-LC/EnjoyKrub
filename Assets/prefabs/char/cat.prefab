@@ -2055,7 +2055,7 @@ MonoBehaviour:
   _itemname: Cat
   _objectType: 0
   currentState: 0
-  patienceDuration: 40
+  patienceDuration: 60
   Idle: {fileID: 3737844436973289653}
   Order: {fileID: 895362272861490688}
   Angry: {fileID: 2473372926614802707}

@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class TimeManager : MonoBehaviour
 {
-    public float dayDuration = 180f;
+    public float dayDuration = 360f;
     private float elapsedTimer = 0f; 
     public TMP_Text timeText;
     private Coroutine dayCoroutine;

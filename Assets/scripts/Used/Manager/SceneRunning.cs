@@ -13,6 +13,16 @@ public class SceneRunning : MonoBehaviour
     public Image loadingProgressBar;
     public TMP_Text loadingProgressText;
 
+    public static SceneRunning instance;
+
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
+
     //กดเริ่มเกมหลังLoad save
     public void StartGame()
     {
